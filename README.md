@@ -6,6 +6,6 @@
 ![react](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
 
-경영정보학과 조채윤
-경영정보학과 이유승
-전자전기공학부 강민지
+경영정보학과 조채윤 [BE]
+경영정보학과 이유승 [BE]
+전자전기공학부 강민지 [FE]
