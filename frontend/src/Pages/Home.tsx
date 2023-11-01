@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { isLoginCheck, EventState} from 'recoil/Atom'
 import * as Api from 'lib/Api';
 import styled from 'styled-components';
-import background_image from '../Assets/Images/IMG_4174.png';
+import background_image from '../Assets/Images/IMG_4174.jpeg';
 import QuickMenu_image from '../Assets/Images/quick_banner01.png';
 import QuickMenu_image2 from '../Assets/Images/quick_banner02.png';
 import QuickMenu_image3 from '../Assets/Images/quick_banner03.png';
