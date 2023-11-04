@@ -1,15 +1,13 @@
-package com.example.backend.controller.response.userResponseDto;
+package com.example.backend.controller.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-
 @Getter
 @AllArgsConstructor
 public class UserLoginResponseDto {
-    private String token;
-    private String userName;
-    private String schoolNumber;
-    private String userType;
 
+    private String userID;
+    private String userName;
+    private String userType;
 }

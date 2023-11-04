@@ -3,28 +3,23 @@ package com.example.backend.exception;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-/**
- * 다양한 예외 발생 시 처리하는 코드
- */
 @Getter
 @AllArgsConstructor
-public class ScheduleException extends RuntimeException{
+public class Exception extends RuntimeException{
 
     private ErrorCode errorCode;
     private String message;
 
-    public ScheduleException(ErrorCode errorCode){
+    public Exception(ErrorCode errorCode) {
         this.errorCode = errorCode;
         this.message = null;
     }
 
-
     @Override
-    public String getMessage(){
-        if(message == null){
+    public String getMessage() {
+        if(message == null) {
             return errorCode.getMessage();
         }
         return String.format("%s, %s", errorCode.getMessage(), message);
     }
-
 }
