@@ -1,6 +1,6 @@
-package com.example.backend.controller.response.userResponseDto;
+package com.example.backend.controller.response;
 
-import com.example.backend.model.UserEntity;
+import com.example.backend.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,14 +8,14 @@ import lombok.Getter;
 @AllArgsConstructor
 public class UserJoinResponseDto {
 
-    private String schoolNumber;
-    private String name;
+    private String userID;
+    private String userName;
     private String userType;
 
     public static UserJoinResponseDto toUserJoinResponse(UserEntity user) {
         return new UserJoinResponseDto(
-                user.getSchoolNumber(),
-                user.getName(),
+                user.getUserID(),
+                user.getUserName(),
                 user.getUserType().name()
         );
     }
