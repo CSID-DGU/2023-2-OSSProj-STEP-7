@@ -1,15 +1,15 @@
-import { User } from "./models/user.model.js";
-import { Subject } from "./models/subject.model.js";
 import bcrypt from "bcrypt";
 import fs from "fs";
-import path from "path";
+import path, { dirname } from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+import { Subject } from "./models/subject.model.js";
+import { User } from "./models/user.model.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const passwordLogPath = path.join(__dirname, "passwords.log");
 
+console.log(passwordLogPath)
 const courseTypes = ["학기", "일교", "공교", "전공", "전필", "전선"];
 
 const firstNames = [
@@ -136,7 +136,7 @@ async function assignSubjectsToUsers(users, subjects) {
 
 export const initData = async () => {
   let subjects = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10; i++) {
     const credit = Math.floor(Math.random() * 3) + 1;
     const classification =
       courseTypes[Math.floor(Math.random() * courseTypes.length)];
@@ -150,9 +150,10 @@ export const initData = async () => {
     await newSubject.save();
     subjects.push(newSubject);
   }
+  console.log(subjects)
 
   let users = [];
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 10; i++) {
     const username = getRandomKoreanName();
     const email =
       "2023" +
@@ -173,6 +174,8 @@ export const initData = async () => {
 
     await newUser.save();
     users.push(newUser);
+    console.log(i)
+
   }
 
   await assignSubjectsToUsers(users, subjects);

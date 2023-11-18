@@ -1,5 +1,5 @@
-import {Box, Button, Container, Divider, HStack, Spinner, StackDivider, Text} from "@chakra-ui/react";
-import {gql, useQuery} from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
+import { Box, Button, Container, Divider, HStack, Spinner, StackDivider, Text } from "@chakra-ui/react";
 
 const QUERY_SUBJECT = gql`
 query Subject($subjectId: ID!) {
@@ -25,8 +25,8 @@ const TitleBox = (props) => {
         if(title) return title;
         else {
             if(props.data.user.isAdmin) {
-                props.setTitle("6471ea1d8c0d64b3c26745d4");
-                return "6471ea1d8c0d64b3c26745d4"
+                props.setTitle("6554243f4c476f9f21045215");
+                return "6554243f4c476f9f21045215"
             }
             else props.setTitle(props.data.user.subjects[0]._id);
             return props.data.user.subjects[0]._id;
