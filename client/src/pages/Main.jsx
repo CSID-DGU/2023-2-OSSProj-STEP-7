@@ -1,16 +1,11 @@
 import React from 'react';
 import  recoil from 'recoil';
 import {Atom} from '../components/Atom';
-// Main.js 파일 상단에 추가
 import { RecoilRoot } from 'recoil';
 import Api from "../components/api";
 
 // 나머지 코드에서 Recoil을 사용할 수 있습니다.
-
-
-
 // import { React, useEffect, useState } from "react";
-
 // import Main from "../components/CourseRow.js";
 
 
@@ -80,6 +75,7 @@ var quick_banner03_png_1 = require("../Assets/Images/quick_banner03.png");
 var quick_banner04_png_1 = require("../Assets/Images/quick_banner04.png");
 var quick_banner05_png_1 = require("../Assets/Images/quick_banner05.png");
 var quick_banner06_png_1 = require("../Assets/Images/quick_banner06.png");
+
 var TopMenu = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  padding: 0px 25rem;\n  background-color: #f8f9fa;\n"], ["\n  display: flex;\n  padding: 0px 25rem;\n  background-color: #f8f9fa;\n"])));
 var TopMenuContent = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  margin: 0 auto;\n  padding: 15px 10rem;\n  position: relative; \n  cursor: pointer; \n  color: #333;\n  font-size: 15px;\n\n  .datalist {\n    display: none;\n    position: absolute;\n    top: 100%;\n    left: 0;\n    width: 100%;\n    background-color: #fff;\n    border: 1px solid #ccc;\n    padding: 0px;\n    z-index: 1;\n  }\n  \n  .datalist-item {\n    border-bottom: 1px solid #ccc; /* \uAC00\uB85C\uC120 \uCD94\uAC00 */\n    padding: 10px 0; /* \uC0C1\uD558 \uC5EC\uBC31 \uC870\uC815 */\n    width: 100%;\n    margin: 0 auto;\n    &:hover {\n      background-color: #C3BC93; /* \uD56D\uBAA9 1\uC5D0 hover\uB410\uC744 \uB54C \uBC30\uACBD\uC0C9\uC744 \uBCC0\uACBD\uD569\uB2C8\uB2E4. */\n    }\n  }\n\n  &:hover .datalist {\n    display: block;\n  }\n\n\n  &:hover {\n    background-color: #695B50;\n  }\n\n};\n"], ["\n  margin: 0 auto;\n  padding: 15px 10rem;\n  position: relative; \n  cursor: pointer; \n  color: #333;\n  font-size: 15px;\n\n  .datalist {\n    display: none;\n    position: absolute;\n    top: 100%;\n    left: 0;\n    width: 100%;\n    background-color: #fff;\n    border: 1px solid #ccc;\n    padding: 0px;\n    z-index: 1;\n  }\n  \n  .datalist-item {\n    border-bottom: 1px solid #ccc; /* \uAC00\uB85C\uC120 \uCD94\uAC00 */\n    padding: 10px 0; /* \uC0C1\uD558 \uC5EC\uBC31 \uC870\uC815 */\n    width: 100%;\n    margin: 0 auto;\n    &:hover {\n      background-color: #C3BC93; /* \uD56D\uBAA9 1\uC5D0 hover\uB410\uC744 \uB54C \uBC30\uACBD\uC0C9\uC744 \uBCC0\uACBD\uD569\uB2C8\uB2E4. */\n    }\n  }\n\n  &:hover .datalist {\n    display: block;\n  }\n\n\n  &:hover {\n    background-color: #695B50;\n  }\n\n};\n"])));
 var TopMenuDiv = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding: 15px 0;\n  color: #ced4da;\n"], ["\n  padding: 15px 0;\n  color: #ced4da;\n"])));
@@ -90,12 +86,11 @@ var QuickMenuTitle = styled_components_1.default.span(templateObject_7 || (templ
 var QuickMenuContent = styled_components_1.default.div(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  display: flex;\n  widht: 100%;\n  margin: 10px;\n  background-color: #f3d86b;\n\n  &:hover {\n    background-color: #EB9332;\n  }\n"], ["\n  display: flex;\n  widht: 100%;\n  margin: 10px;\n  background-color: #f3d86b;\n\n  &:hover {\n    background-color: #EB9332;\n  }\n"])));
 var QuickMenuImage = styled_components_1.default.img(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n  width: 35px;\n  height: 35px;\n  margin: 5px;\n"], ["\n  width: 35px;\n  height: 35px;\n  margin: 5px;\n"])));
 var QuickMenuSpan = styled_components_1.default.div(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n  text-align: left;\n  width: 70%;\n  padding: 3px 0 0 10px;\n  line-height: 40px;\n  font-weight: bold;\n  font-size: 12px;\n  color: #333;\n"], ["\n  text-align: left;\n  width: 70%;\n  padding: 3px 0 0 10px;\n  line-height: 40px;\n  font-weight: bold;\n  font-size: 12px;\n  color: #333;\n"])));
-var LeftBannerWapper = styled_components_1.default.div(templateObject_11 || (templateObject_11 = __makeTemplateObject(["\n  position: absolute;\n  top: 260px;\n  width: 110px;\n  padding: 10px;\n  font-size: 15px;\n  font-weight: 500;\n  background-color: #695b50;\n"], ["\n  position: absolute;\n  top: 260px;\n  width: 110px;\n  padding: 10px;\n  font-size: 15px;\n  font-weight: 500;\n  background-color: #695b50;\n"])));
-var LeftBannerTitle = styled_components_1.default.span(templateObject_12 || (templateObject_12 = __makeTemplateObject(["\n  display: block;\n  margin: 5px 0 10px 0;\n  font-size: 15px;\n  font-weight: bold;\n  color: #fff;\n"], ["\n  display: block;\n  margin: 5px 0 10px 0;\n  font-size: 15px;\n  font-weight: bold;\n  color: #fff;\n"])));
-var LeftBannerS = styled_components_1.default.div(templateObject_13 || (templateObject_13 = __makeTemplateObject(["\n  width: 100%;\n  height: 50px;\n  line-height: 50px;\n  margin: 5px 0;\n  font-size: 14px;\n  font-weight: bold;\n  background-color: #edc219;\n"], ["\n  width: 100%;\n  height: 50px;\n  line-height: 50px;\n  margin: 5px 0;\n  font-size: 14px;\n  font-weight: bold;\n  background-color: #edc219;\n"])));
-var LeftBannerJ = styled_components_1.default.div(templateObject_14 || (templateObject_14 = __makeTemplateObject(["\n  width: 100%;\n  height: 50px;\n  line-height: 50px;\n  margin: 5px 0;\n  font-size: 14px;\n  font-weight: bold;\n  background-color: #eb9332;\n"], ["\n  width: 100%;\n  height: 50px;\n  line-height: 50px;\n  margin: 5px 0;\n  font-size: 14px;\n  font-weight: bold;\n  background-color: #eb9332;\n"])));
-var LeftBannerC = styled_components_1.default.div(templateObject_15 || (templateObject_15 = __makeTemplateObject(["\n  width: 100%;\n  height: 50px;\n  line-height: 50px;\n  margin: 5px 0;\n  font-size: 14px;\n  font-weight: bold;\n  background-color: #e15e39;\n"], ["\n  width: 100%;\n  height: 50px;\n  line-height: 50px;\n  margin: 5px 0;\n  font-size: 14px;\n  font-weight: bold;\n  background-color: #e15e39;\n"])));
-var LeftBanenrSpan = styled_components_1.default.span(templateObject_16 || (templateObject_16 = __makeTemplateObject(["\n  color: #fff;\n"], ["\n  color: #fff;\n"])));
+
+
+
+
+
 var Home = function () {
     var _a = (0, react_1.useState)([]), schedule = _a[0], setSchedule = _a[1];
     var _b = (0, react_1.useState)([]), subjects = _b[0], setSubjects = _b[1];
@@ -201,23 +196,10 @@ var Home = function () {
           </QuickMenuContent>
         </QuickMenuWapper>
 
-        {/* {loginCheck ?
-          <LeftBannerWapper>
-            <LeftBannerTitle>학교공지</LeftBannerTitle>
-            <LeftBannerS>
-              <LeftBanenrSpan>학사공지</LeftBanenrSpan>
-            </LeftBannerS>
-            <LeftBannerJ>
-              <LeftBanenrSpan>장학공지</LeftBanenrSpan>
-            </LeftBannerJ>
-            <LeftBannerC>
-              <LeftBanenrSpan>취업공지</LeftBanenrSpan>
-            </LeftBannerC>
-          </LeftBannerWapper>
-        : ''} */}
+
       </BgImage>
       </div>);
 };
 }
 export default Main;
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10, templateObject_11, templateObject_12, templateObject_13, templateObject_14, templateObject_15, templateObject_16;
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10;
