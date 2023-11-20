@@ -1,5 +1,5 @@
-import { gql, useQuery } from "@apollo/client";
-import { Box, Button, Container, Divider, HStack, Spinner, StackDivider, Text } from "@chakra-ui/react";
+import {Box, Button, Container, Divider, HStack, Spinner, StackDivider, Text} from "@chakra-ui/react";
+import {gql, useQuery} from "@apollo/client";
 
 const QUERY_SUBJECT = gql`
 query Subject($subjectId: ID!) {
@@ -21,19 +21,35 @@ const TitleBox = (props) => {
             'url(./pxfuel.jpg) center/cover no-repeat' 
     }
 
+    // function get_id(title) {
+    //     if(title) return title;
+    //     else {
+    //         if(props.data.user.isAdmin) {
+    //             props.setTitle("6471ea1d8c0d64b3c26745d4");
+    //             return "6471ea1d8c0d64b3c26745d4"
+    //         }
+    //         else props.setTitle(props.data.user.subjects[0]._id);
+    //         return props.data.user.subjects[0]._id;
+    //     }
+
+    // }
     function get_id(title) {
-        if(title) return title;
+        if (title) return title;
         else {
-            if(props.data.user.isAdmin) {
-                props.setTitle("6554243f4c476f9f21045215");
-                return "6554243f4c476f9f21045215"
+            if (props.data.user && props.data.user.isAdmin) {
+                props.setTitle("6471ea1d8c0d64b3c26745d4");
+                return "6471ea1d8c0d64b3c26745d4";
+            } else if (props.data.user && props.data.user.subjects.length > 0) {
+                props.setTitle(props.data.user.subjects[0]._id);
+                return props.data.user.subjects[0]._id;
+            } else {
+                // Handle the case where props.data.user or props.data.user.subjects is null or empty.
+                // You might want to provide a default value or handle it differently based on your requirements.
+                return "defaultSubjectId";
             }
-            else props.setTitle(props.data.user.subjects[0]._id);
-            return props.data.user.subjects[0]._id;
         }
-
     }
-
+    
     const _id = get_id(props.title);
     const values = { subjectId : _id};
     const { data, loading, error } = useQuery(QUERY_SUBJECT, {
@@ -91,7 +107,8 @@ const TitleBox = (props) => {
                     fontWeight="extrabold"
                     color="white"
                 >
-                    {data.subject.name}
+                    {/* {data.subject.name} */}
+                    {data.subject && data.subject.name ? data.subject.name : "이름 없음"}
                 </Text>
                 <Container //과목 상세 정보 Box
                     bg="whiteAlpha.700"
@@ -137,10 +154,12 @@ const TitleBox = (props) => {
                                 fontSize={12}
                             >
                                 <Text>
-                                    {data.subject.classification}
+                                    {/* {data.subject.classification} */}
+                                    {data.subject && data.subject.classification ? data.subject.classification : "구분 없음"}
                                 </Text>
                                 <Text>
-                                    {data.subject.credit} 점
+                                    {/* {data.subject.credit} 점 */}
+                                    {data.subject && data.subject.credit ? data.subject.credit + " 점" : "학점 없음"}
                                 </Text>
                                 <Button size="xs" align="center" bgColor="blackAlpha.700">
                                     조회하기
@@ -176,7 +195,10 @@ const TitleBox = (props) => {
                                 fontSize={12}
                             >
                                 <Text ml={7}>
-                                    {data.subject.capacity} 명
+                                    {/* {data.subject.capacity} 명 */}
+                                    {data.subject && data.subject.capacity ? data.subject.capacity + ' 명' : '정원 정보 없음'}
+                                   
+
                                 </Text>
                                 <Button size="xs" align="center" bgColor="blackAlpha.700" color="whiteAlpha.900">
                                     조회하기
