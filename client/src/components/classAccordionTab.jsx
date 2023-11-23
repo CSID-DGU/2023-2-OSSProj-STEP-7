@@ -265,6 +265,36 @@ const ClassAccordionTab = (props) => {
                 <Divider />
                 <Divider />
             </AccordionItem>
+            <AccordionItem>
+                <h2>
+                    <AccordionButton _expanded={{ bg: 'aliceblue', color: 'black' }}>
+                        <Box
+                            as="span"
+                            flex='1'
+                            textAlign='left'
+                            fontWeight="700"
+                            fontSize="15px"
+                        >
+                            <EditIcon mr={2} />
+                            과제
+                        </Box>
+                        <AccordionIcon />
+                    </AccordionButton>
+                </h2>
+                <Divider />
+                <AccordionPanel py={2} fontSize="14px" fontWeight="600" height="200px" color="black" backgroundColor={"aliceblue"} >
+                    <Link display="block"> 내할일보기 </Link>
+                </AccordionPanel>
+                <Divider />
+                <Divider />
+                <Divider />
+                <Divider />
+                <Divider />
+                <Divider />
+            </AccordionItem>
+
+            
+            
         </Accordion>
     )
 }

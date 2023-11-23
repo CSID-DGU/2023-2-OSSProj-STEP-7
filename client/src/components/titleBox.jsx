@@ -1,5 +1,7 @@
 import {Box, Button, Container, Divider, HStack, Spinner, StackDivider, Text} from "@chakra-ui/react";
 import {gql, useQuery} from "@apollo/client";
+import backImage from '../Assets/Images/back.png';
+
 
 const QUERY_SUBJECT = gql`
 query Subject($subjectId: ID!) {
@@ -15,11 +17,15 @@ query Subject($subjectId: ID!) {
 }
 `
 
-const TitleBox = (props) => {
-    const basicBoxStyles = {
-        background:
-            'url(./pxfuel.jpg) center/cover no-repeat' 
-    }
+// const TitleBox = (props) => {
+//     const basicBoxStyles = {
+//         background:
+//             'url(../Assets/Images/back.png) center/cover no-repeat' 
+//     }
+    const TitleBox = (props) => {
+        const basicBoxStyles = {
+            background: `url(${backImage}) center/cover no-repeat`
+        };
 
     // function get_id(title) {
     //     if(title) return title;
@@ -159,13 +165,59 @@ const TitleBox = (props) => {
                                 </Text>
                                 <Text>
                                     {/* {data.subject.credit} 점 */}
-                                    {data.subject && data.subject.credit ? data.subject.credit + " 점" : "학점 없음"}
+                                    {data.subject && data.subject.credit ? data.subject.credit + " 학점" : "학점 없음"}
                                 </Text>
                                 <Button size="xs" align="center" bgColor="blackAlpha.700">
                                     조회하기
                                 </Button>
                             </HStack>
                         </Box>
+                        <Box
+                            bg="whiteAlpha.700"
+                            w="350px"
+                            h="60px"
+                            borderRadius={5}
+                        >
+                            <HStack
+                                divider={<StackDivider borderColor="blackAlpha.700"/>}
+                                color="blackAlpha.700"
+                                justify="space-evenly"
+                                p={1}
+                                fontSize={12}
+                            >
+                                <Text>
+                                    지각 횟수
+                                </Text>
+                                <Text>
+                                    결석 횟수
+                                </Text>
+                            </HStack>
+                            <Divider borderColor="blackAlpha.700"/>
+                            <HStack
+                                divider={<StackDivider borderColor="blackAlpha.700"/>}
+                                color="blackAlpha.700"
+                                justify="space-evenly"
+                                p={1}
+                                fontSize={12}
+                            >
+                                <Text ml={7}>
+                                    {/* {data.subject.capacity} 명
+                                    {data.subject && data.subject.capacity ? data.subject.capacity + ' 명' : '정원 정보 없음'} */}
+                                    n 번
+                                
+
+                                </Text>
+                                <Text> m번
+                                <Button size="xs" align="center" bgColor="blackAlpha.700" color="whiteAlpha.900">
+                                    +
+                                </Button>
+                                <Button size="xs" align="center" bgColor="blackAlpha.700" color="whiteAlpha.900">
+                                    -
+                                </Button>
+                                </Text>
+                            </HStack>
+                        </Box>
+
                         <Box
                             bg="whiteAlpha.700"
                             w="350px"
