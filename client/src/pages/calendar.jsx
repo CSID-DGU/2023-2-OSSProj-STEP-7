@@ -61,6 +61,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+
 var react_1 = require("react");
 var styled_components_1 = require("styled-components");
 var react_2 = require("@fullcalendar/react");
@@ -78,27 +79,151 @@ var uuid_1 = require("uuid");
 var check_png_1 = require("Assets/Images/check.png");
 var ai_1 = require("react-icons/ai");
 var moment_1 = require("moment");
-var Api = require("lib/Api");
-var Container = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width : 80%;\n  margin : 3rem auto 5rem;\n"], ["\n  width : 80%;\n  margin : 3rem auto 5rem;\n"])));
-var Filter = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display : flex;\n  flex-direction : column;\n  align-content: flex-end\n  \n  &:first-child {\n      margin-bottom : 2rem;\n  }\n  &:last-child {\n      margin-top : 2rem;\n  }\n"], ["\n  display : flex;\n  flex-direction : column;\n  align-content: flex-end\n  \n  &:first-child {\n      margin-bottom : 2rem;\n  }\n  &:last-child {\n      margin-top : 2rem;\n  }\n"])));
-var PostBtn = styled_components_1.default.button(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  &:first-child {\n      margin-right : 1rem;\n  }\n\n  width : 9.5rem;\n  height : 2.8rem;\n  background-color : ", ";\n  border:none;\n  border-radius: 5px;\n  color: white;\n  padding: 0.2rem;\n  font-size: 1rem;\n  font-weight: bold;\n  cursor: pointer;\n"], ["\n  &:first-child {\n      margin-right : 1rem;\n  }\n\n  width : 9.5rem;\n  height : 2.8rem;\n  background-color : ", ";\n  border:none;\n  border-radius: 5px;\n  color: white;\n  padding: 0.2rem;\n  font-size: 1rem;\n  font-weight: bold;\n  cursor: pointer;\n"])), function (props) { return props.btnName === 'personal' ? 'orange' : '#6ED746'; });
-var CalendarDiv = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  display: felx;\n  flex-direction: row;\n"], ["\n  display: felx;\n  flex-direction: row;\n"])));
-var CalendarBody = styled_components_1.default.div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  width: 75%; \n"], ["\n  width: 75%; \n"])));
-var TaskBody = styled_components_1.default.div(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  width: 22%;\n  margin-left: 3%;\n"], ["\n  width: 22%;\n  margin-left: 3%;\n"])));
-var TaskBodyStyle = styled_components_1.default.div(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  text-align: left;\n  padding-left: 1rem;\n  border-radius: 5px;\n  border: 2px solid #c9b087;\n"], ["\n  text-align: left;\n  padding-left: 1rem;\n  border-radius: 5px;\n  border: 2px solid #c9b087;\n"])));
-var TodoList = (0, styled_components_1.default)(TaskBodyStyle)(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  height: 60%;\n"], ["\n  height: 60%;\n"])));
-var CompleteList = (0, styled_components_1.default)(TaskBodyStyle)(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n  margin-top: 1rem;\n  height : 37%;\n"], ["\n  margin-top: 1rem;\n  height : 37%;\n"])));
-var TodoTask = styled_components_1.default.div(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n  display: flex;\n  justify-content: space-between;\n  border: 0;\n  background-color: transparent;\n  margin-top: 0.5rem;\n"], ["\n  display: flex;\n  justify-content: space-between;\n  border: 0;\n  background-color: transparent;\n  margin-top: 0.5rem;\n"])));
-var Subheading = styled_components_1.default.p(templateObject_11 || (templateObject_11 = __makeTemplateObject(["\n  display: block;\n  margin: 0.7rem 1rem 1.5rem 0;\n  background-color:#c9b087;\n  border-radius : 0.5rem;\n  height: 2rem;\n  color:white;\n  text-align: center;\n  font-weight: 600;\n  vertical-align: middle;\n  padding-top:0.5rem;\n"], ["\n  display: block;\n  margin: 0.7rem 1rem 1.5rem 0;\n  background-color:#c9b087;\n  border-radius : 0.5rem;\n  height: 2rem;\n  color:white;\n  text-align: center;\n  font-weight: 600;\n  vertical-align: middle;\n  padding-top:0.5rem;\n"])));
-var Dday = styled_components_1.default.div(templateObject_12 || (templateObject_12 = __makeTemplateObject(["\n  background-color: #12314f;\n  color: #fff;\n  border-radius: 0.5rem;\n  margin-right: 1.5rem;\n  font-size: 0.5rem;\n  text-align: center;\n  padding : 0.2rem 0;\n  width: 2.5rem;\n  height: 1rem;\n"], ["\n  background-color: #12314f;\n  color: #fff;\n  border-radius: 0.5rem;\n  margin-right: 1.5rem;\n  font-size: 0.5rem;\n  text-align: center;\n  padding : 0.2rem 0;\n  width: 2.5rem;\n  height: 1rem;\n"])));
-var MainFilter = styled_components_1.default.div(templateObject_13 || (templateObject_13 = __makeTemplateObject(["\n  display:flex;\n  justify-content : flex-end;\n"], ["\n  display:flex;\n  justify-content : flex-end;\n"])));
-var RightAlign = styled_components_1.default.div(templateObject_14 || (templateObject_14 = __makeTemplateObject(["\n  display:flex;\n  justify-content : flex-end;\n  margin-top : 2rem;\n"], ["\n  display:flex;\n  justify-content : flex-end;\n  margin-top : 2rem;\n"])));
-var PostBtns = (0, styled_components_1.default)(RightAlign)(templateObject_15 || (templateObject_15 = __makeTemplateObject([""], [""])));
-var SubFilter = (0, styled_components_1.default)(RightAlign)(templateObject_16 || (templateObject_16 = __makeTemplateObject(["\n  margin-bottom: 2rem;\n"], ["\n  margin-bottom: 2rem;\n"])));
-var RestoreBtn = styled_components_1.default.button(templateObject_17 || (templateObject_17 = __makeTemplateObject(["\n  background-color: #A69D8F;\n  border:none;\n  border-radius: 0.5rem;\n  margin-right: 1.5rem;\n  padding: 0.05rem 0.02rem;\n  width: 5rem;\n  color: #fff;\n  font-size: 0.7rem;\n  font-weight: bold;\n  text-align: center;\n"], ["\n  background-color: #A69D8F;\n  border:none;\n  border-radius: 0.5rem;\n  margin-right: 1.5rem;\n  padding: 0.05rem 0.02rem;\n  width: 5rem;\n  color: #fff;\n  font-size: 0.7rem;\n  font-weight: bold;\n  text-align: center;\n"])));
-var TaskTitle = styled_components_1.default.span(templateObject_18 || (templateObject_18 = __makeTemplateObject(["\n  display:block;\n  width:80%;\n  margin-left: 0.5rem;\n  tex-align: left;\n"], ["\n  display:block;\n  width:80%;\n  margin-left: 0.5rem;\n  tex-align: left;\n"])));
-var CompleteTitle = (0, styled_components_1.default)(TaskTitle)(templateObject_19 || (templateObject_19 = __makeTemplateObject(["\n  text-decoration: line-through;\n  color:#737373;\n"], ["\n  text-decoration: line-through;\n  color:#737373;\n"])));
-var TaskIconConatiner = styled_components_1.default.div(templateObject_20 || (templateObject_20 = __makeTemplateObject(["\n  padding-top: 0.1rem;\n"], ["\n  padding-top: 0.1rem;\n"])));
+var Api = require("lib/Api");var Container = styled_components_1.default.div`
+width: 80%;
+margin: 3rem auto 5rem;
+`;
+
+var Filter = styled_components_1.default.div`
+display: flex;
+flex-direction: column;
+align-content: flex-end;
+
+&:first-child {
+  margin-bottom: 2rem;
+}
+
+&:last-child {
+  margin-top: 2rem;
+}
+`;
+
+var PostBtn = styled_components_1.default.button`
+&:first-child {
+  margin-right: 1rem;
+}
+
+width: 9.5rem;
+height: 2.8rem;
+background-color: ${(props) => (props.btnName === 'personal' ? 'orange' : '#6ED746')};
+border: none;
+border-radius: 5px;
+color: white;
+padding: 0.2rem;
+font-size: 1rem;
+font-weight: bold;
+cursor: pointer;
+`;
+
+var CalendarDiv = styled_components_1.default.div`
+display: flex;
+flex-direction: row;
+`;
+
+var CalendarBody = styled_components_1.default.div`
+width: 75%;
+`;
+
+var TaskBody = styled_components_1.default.div`
+width: 22%;
+margin-left: 3%;
+`;
+
+var TaskBodyStyle = styled_components_1.default.div`
+text-align: left;
+padding-left: 1rem;
+border-radius: 5px;
+border: 2px solid #c9b087;
+`;
+
+var TodoList = styled_components_1.default(TaskBodyStyle)`
+height: 60%;
+`;
+
+var CompleteList = styled_components_1.default(TaskBodyStyle)`
+margin-top: 1rem;
+height: 37%;
+`;
+
+var TodoTask = styled_components_1.default.div`
+display: flex;
+justify-content: space-between;
+border: 0;
+background-color: transparent;
+margin-top: 0.5rem;
+`;
+
+var Subheading = styled_components_1.default.p`
+display: block;
+margin: 0.7rem 1rem 1.5rem 0;
+background-color: #c9b087;
+border-radius: 0.5rem;
+height: 2rem;
+color: white;
+text-align: center;
+font-weight: 600;
+vertical-align: middle;
+padding-top: 0.5rem;
+`;
+
+var Dday = styled_components_1.default.div`
+background-color: #12314f;
+color: #fff;
+border-radius: 0.5rem;
+margin-right: 1.5rem;
+font-size: 0.5rem;
+text-align: center;
+padding: 0.2rem 0;
+width: 2.5rem;
+height: 1rem;
+`;
+
+var MainFilter = styled_components_1.default.div`
+display: flex;
+justify-content: flex-end;
+`;
+
+var RightAlign = styled_components_1.default.div`
+display: flex;
+justify-content: flex-end;
+margin-top: 2rem;
+`;
+
+var PostBtns = styled_components_1.default(RightAlign)``;
+
+var SubFilter = styled_components_1.default(RightAlign)`
+margin-bottom: 2rem;
+`;
+
+var RestoreBtn = styled_components_1.default.button`
+background-color: #A69D8F;
+border: none;
+border-radius: 0.5rem;
+margin-right: 1.5rem;
+padding: 0.05rem 0.02rem;
+width: 5rem;
+color: #fff;
+font-size: 0.7rem;
+font-weight: bold;
+text-align: center;
+`;
+
+var TaskTitle = styled_components_1.default.span`
+display: block;
+width: 80%;
+margin-left: 0.5rem;
+text-align: left;
+`;
+
+var CompleteTitle = styled_components_1.default(TaskTitle)`
+text-decoration: line-through;
+color: #737373;
+`;
+
+var TaskIconConatiner = styled_components_1.default.div`
+padding-top: 0.1rem;
+`;
+
 // memo지혜 : 중요도 배열
 var IMPORTANCE = ['EASYGOING', 'NORMAL', 'IMPORTANT'];
 // memo지혜 : 불토명도 배열
