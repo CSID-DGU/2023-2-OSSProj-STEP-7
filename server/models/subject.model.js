@@ -16,6 +16,17 @@ const SubjectSchema = new mongoose.Schema({
       index: true,
     },
   ],
+  lecture_time: String,
+  lecture_date: String,
+  lecture_room: String,
+  absent_count: Number,
+  late_count: Number,
+  assignments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Assignment",
+    },
+  ]
 });
 
 export const Subject = mongoose.model("Subject", SubjectSchema);

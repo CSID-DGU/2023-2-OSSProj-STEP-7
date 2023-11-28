@@ -27,6 +27,11 @@ export const mutCreateSubject = async (
     credit,
     classification,
     users: [user._id],
+    lecture_time,
+    lecture_date,
+    lecture_room,
+    absent_count,
+    late_count,
   });
   return subject.save();
 };

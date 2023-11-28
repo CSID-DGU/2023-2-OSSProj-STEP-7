@@ -16,6 +16,8 @@ import {
 import { queryUser, queryUsers } from "./controller/query/query.user.js";
 import { initData } from "./info.js";
 import { getUserFromToken } from "./user.permission.js";
+import { queryAssignment, queryAssignments } from "./controller/query/query.assignment.js";
+import { mutCreateAssignment } from "./controller/mutation/mutation.assignment.js";
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -27,7 +29,7 @@ mongoose.connection.once("open", async () => {
 
   try {
     await createAdmin();
-    await initData();
+    // await initData();
     console.log("Admin user checked successfully");
   } catch (error) {
     console.error("Error checking admin user:", error);
@@ -43,6 +45,8 @@ mongoose.connection.once("open", async () => {
       userSubjects(userId: ID!): [Subject]
       users: [User]
       user(userId: ID!): User
+      assignments: [Assignment]
+      assignment(assignmentId: ID!): Assignment
     }
 
     type Mutation {
@@ -50,6 +54,8 @@ mongoose.connection.once("open", async () => {
       login(id: String!, password: String!): AuthPayload
       createSubject(name: String!, credit: Int, classification: String): Subject
       addUserToSubject(subjectId: ID!, userId: ID!): Subject
+      createAssignment(assignment_name: String!, credit: Int, classification: String): Assignment
+      addAssignmentToSubject(assignmentId: ID!, subjectId: ID!): Assignment
     }
 
     type User {
@@ -85,6 +91,21 @@ mongoose.connection.once("open", async () => {
       classification: String
       capacity: Int
       users: [User!]!
+      lecture_time: String
+      lecture_date: String
+      lecture_room: String
+      absent_count: Int
+      late_count: Int
+      assignments: [Assignment]
+    }
+
+    type Assignment {
+      _id: ID!
+      assignment_name: String!
+      subjects: [Subject!]!
+      assignment_status: String
+      assignment_date: DateTime
+      capacity: Int
     }
   `;
 
@@ -95,6 +116,8 @@ mongoose.connection.once("open", async () => {
       userSubjects: queryUserSubjects,
       users: queryUsers,
       user: queryUser,
+      assignments: queryAssignments,
+      assignment: queryAssignment,
     },
 
     Mutation: {
@@ -102,6 +125,7 @@ mongoose.connection.once("open", async () => {
       login: mutLogin,
       createSubject: mutCreateSubject,
       addUserToSubject: mutAddUserToSubject,
+      createAssignment: mutCreateAssignment,
     },
   };
 
