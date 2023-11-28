@@ -12,6 +12,7 @@ import {
     Tabs, Tbody, Td, Text, Th, Thead, Tr
 } from "@chakra-ui/react";
 import {EditIcon} from "@chakra-ui/icons";
+import calendar from "./calendar"
 
 const ClassLearningContent = (props) => {
 
@@ -30,7 +31,24 @@ const ClassLearningContent = (props) => {
             >
                 <HStack justify="space-between">
                     <Heading as="h2" fontSize={30}>학습 목차</Heading>
-                    <Button>과목 정보</Button>
+                
+                    <Box
+                            bg="gray"
+                            w="350px"
+                            h="100px"
+                            borderRadius={5}
+                        >
+                    <Text>
+                        이 자리에 달력 위젯
+
+
+                    </Text>
+                    {/* <calendar>
+
+                    </calendar> */}
+                    </Box>
+
+                    {/* <Button>이 자리에 달력 위젯</Button> */}
                 </HStack>
             </Box>
             <Box

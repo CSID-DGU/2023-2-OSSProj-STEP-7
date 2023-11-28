@@ -1,13 +1,48 @@
-import React from 'react';
-import  recoil from 'recoil';
-import {Atom} from '../components/Atom';
-import { RecoilRoot } from 'recoil';
+import react from 'react';
+import {useContext, useState, useEffect} from "react";
+// import {atom} from '../components/Atom';
 import Api from "../components/api";
+// import { utils } from '../components/utils'; // utils
+import { useRecoilValue } from 'recoil';
+import { isLoginCheck, EventState} from '../components/Atom';
+import { recoilPersist } from 'recoil-persist';
+// import { useRecoilValue } from 'recoil';
+// import { RecoilRoot } from 'recoil';
+// import  recoil from 'recoil';
 
-// 나머지 코드에서 Recoil을 사용할 수 있습니다.
-// import { React, useEffect, useState } from "react";
-// import Main from "../components/CourseRow.js";
+import quick_banner01_png from "../Assets/Images/quick_banner01.png";
+import quick_banner02_png from "../Assets/Images/quick_banner02.png";
+import quick_banner03_png from "../Assets/Images/quick_banner03.png";
+import quick_banner04_png from "../Assets/Images/quick_banner04.png";
+import quick_banner05_png from "../Assets/Images/quick_banner05.png";
+import quick_banner06_png from "../Assets/Images/quick_banner06.png";
+import IMG_4174_jpeg from "../Assets/Images/IMG_4174.jpeg";
+import {AuthContext} from "../context/authContext";
+import {gql, useQuery} from "@apollo/client";
+import eclass_logo from '../Assets/Images/eclass_logo.png';
 
+
+var MyClass = require("../components/MyClass");
+var MySchedule = require("../components/MySchedule");
+var styled_components = require("styled-components");
+
+// var persistAtom = (0, recoil_persist.recoilPersist)().persistAtom;
+// var recoil_persist = require("recoil-persist");
+const { persistAtom } = recoilPersist();
+
+const QUERY_USER = gql`
+    query User($userId: ID!) {
+       user(userId: $userId) {
+        email
+        isAdmin
+        _id
+        subjects {
+          _id
+        }
+        username
+      }
+    }
+`
 
 const Main= () => {
 // "use strict";
@@ -61,70 +96,157 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var MyClass_1 = require("../components/MyClass");
-var MySchedule_1 = require("../components/MySchedule");
-// var recoil_1 = require("recoil");
-// var Atom_1 = require("recoil/Atom");
-// var Api = require("lib/Api");
-var styled_components_1 = require("styled-components");
-var IMG_4174_jpeg_1 = require("../Assets/Images/IMG_4174.jpeg");
-var quick_banner01_png_1 = require("../Assets/Images/quick_banner01.png");
-var quick_banner02_png_1 = require("../Assets/Images/quick_banner02.png");
-var quick_banner03_png_1 = require("../Assets/Images/quick_banner03.png");
-var quick_banner04_png_1 = require("../Assets/Images/quick_banner04.png");
-var quick_banner05_png_1 = require("../Assets/Images/quick_banner05.png");
-var quick_banner06_png_1 = require("../Assets/Images/quick_banner06.png");
 
-var TopMenu = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  padding: 0px 25rem;\n  background-color: #f8f9fa;\n"], ["\n  display: flex;\n  padding: 0px 25rem;\n  background-color: #f8f9fa;\n"])));
-var TopMenuContent = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  margin: 0 auto;\n  padding: 15px 10rem;\n  position: relative; \n  cursor: pointer; \n  color: #333;\n  font-size: 15px;\n\n  .datalist {\n    display: none;\n    position: absolute;\n    top: 100%;\n    left: 0;\n    width: 100%;\n    background-color: #fff;\n    border: 1px solid #ccc;\n    padding: 0px;\n    z-index: 1;\n  }\n  \n  .datalist-item {\n    border-bottom: 1px solid #ccc; /* \uAC00\uB85C\uC120 \uCD94\uAC00 */\n    padding: 10px 0; /* \uC0C1\uD558 \uC5EC\uBC31 \uC870\uC815 */\n    width: 100%;\n    margin: 0 auto;\n    &:hover {\n      background-color: #C3BC93; /* \uD56D\uBAA9 1\uC5D0 hover\uB410\uC744 \uB54C \uBC30\uACBD\uC0C9\uC744 \uBCC0\uACBD\uD569\uB2C8\uB2E4. */\n    }\n  }\n\n  &:hover .datalist {\n    display: block;\n  }\n\n\n  &:hover {\n    background-color: #695B50;\n  }\n\n};\n"], ["\n  margin: 0 auto;\n  padding: 15px 10rem;\n  position: relative; \n  cursor: pointer; \n  color: #333;\n  font-size: 15px;\n\n  .datalist {\n    display: none;\n    position: absolute;\n    top: 100%;\n    left: 0;\n    width: 100%;\n    background-color: #fff;\n    border: 1px solid #ccc;\n    padding: 0px;\n    z-index: 1;\n  }\n  \n  .datalist-item {\n    border-bottom: 1px solid #ccc; /* \uAC00\uB85C\uC120 \uCD94\uAC00 */\n    padding: 10px 0; /* \uC0C1\uD558 \uC5EC\uBC31 \uC870\uC815 */\n    width: 100%;\n    margin: 0 auto;\n    &:hover {\n      background-color: #C3BC93; /* \uD56D\uBAA9 1\uC5D0 hover\uB410\uC744 \uB54C \uBC30\uACBD\uC0C9\uC744 \uBCC0\uACBD\uD569\uB2C8\uB2E4. */\n    }\n  }\n\n  &:hover .datalist {\n    display: block;\n  }\n\n\n  &:hover {\n    background-color: #695B50;\n  }\n\n};\n"])));
-var TopMenuDiv = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding: 15px 0;\n  color: #ced4da;\n"], ["\n  padding: 15px 0;\n  color: #ced4da;\n"])));
-var BgImage = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  min-height: 800px;\n  background-size: cover;\n"], ["\n  min-height: 800px;\n  background-size: cover;\n"])));
-var MyWapper = styled_components_1.default.div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  position: absolute;\n  display: flex;\n  width: 100%;\n  justify-content: center;\n  margin: 4rem 0;\n"], ["\n  position: absolute;\n  display: flex;\n  width: 100%;\n  justify-content: center;\n  margin: 4rem 0;\n"])));
-var QuickMenuWapper = styled_components_1.default.div(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  position: absolute;\n  top: 260px;\n  right: 0; \n  width: 180px;\n  padding: 10px;\n  background-color: #eaac17;\n"], ["\n  position: absolute;\n  top: 260px;\n  right: 0; \n  width: 180px;\n  padding: 10px;\n  background-color: #eaac17;\n"])));
-var QuickMenuTitle = styled_components_1.default.span(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  display: block;\n  text-align: left;\n  margin: 5px;\n  padding-left: 5px;\n  font-weight: bold;\n  font-size: 15px;\n  color: #fff;\n"], ["\n  display: block;\n  text-align: left;\n  margin: 5px;\n  padding-left: 5px;\n  font-weight: bold;\n  font-size: 15px;\n  color: #fff;\n"])));
-var QuickMenuContent = styled_components_1.default.div(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  display: flex;\n  widht: 100%;\n  margin: 10px;\n  background-color: #f3d86b;\n\n  &:hover {\n    background-color: #EB9332;\n  }\n"], ["\n  display: flex;\n  widht: 100%;\n  margin: 10px;\n  background-color: #f3d86b;\n\n  &:hover {\n    background-color: #EB9332;\n  }\n"])));
-var QuickMenuImage = styled_components_1.default.img(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n  width: 35px;\n  height: 35px;\n  margin: 5px;\n"], ["\n  width: 35px;\n  height: 35px;\n  margin: 5px;\n"])));
-var QuickMenuSpan = styled_components_1.default.div(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n  text-align: left;\n  width: 70%;\n  padding: 3px 0 0 10px;\n  line-height: 40px;\n  font-weight: bold;\n  font-size: 12px;\n  color: #333;\n"], ["\n  text-align: left;\n  width: 70%;\n  padding: 3px 0 0 10px;\n  line-height: 40px;\n  font-weight: bold;\n  font-size: 12px;\n  color: #333;\n"])));
+var TopMenu = styled_components.default.div`
+  display: flex;
+  padding: 0px 25rem;
+  background-color: #f8f9fa;
+`;
+var TopMenuContent = styled_components.default.div`
+  margin: 0 auto;
+  padding: 15px 10rem;
+  position: relative;
+  cursor: pointer;
+  color: #333;
+  font-size: 15px;
 
+  .datalist {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 0px;
+    z-index: 1;
+  }
+  .datalist-item {
+    border-bottom: 1px solid #ccc; /* 가로선 추가 */
+    padding: 10px 0; /* 세로간 간격 */
+    width: 100%;
+    margin: 0 auto;
+    &:hover {
+      background-color: #C3BC93; /* 마우스가 올라갔을 때 배경색을 변경합니다. */
+    }
+  }
+  &:hover .datalist {
+    display: block;
+  }
+  &:hover {
+    background-color: #695B50;
+  }
+`;
+var TopMenuDiv = styled_components.default.div`
+  padding: 15px 0;
+  color: #ced4da;
+`;
+var BgImage = styled_components.default.div`
+  min-height: 800px;
+  background-size: cover;
+`;
+var MyWapper = styled_components.default.div`
+  position: absolute;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 4rem 0;
+`;
+var QuickMenuWapper = styled_components.default.div`
+  position: absolute;
+  top: 260px;
+  right: 0;
+  width: 180px;
+  padding: 10px;
+  background-color: #eaac17;
+`;
+var QuickMenuTitle = styled_components.default.span`
+  display: block;
+  text-align: left;
+  margin: 5px;
+  padding-left: 5px;
+  font-weight: bold;
+  font-size: 15px;
+  color: #fff;
+`;
+var QuickMenuContent = styled_components.default.div`
+  display: flex;
+  widht: 100%;
+  margin: 10px;
+  background-color: #f3d86b;
 
+  &:hover {
+    background-color: #EB9332;
+  }
+`;
+var QuickMenuImage = styled_components.default.img`
+  width: 35px;
+  height: 35px;
+  margin: 5px;
+`;
+var QuickMenuSpan = styled_components.default.div`
+  text-align: left;
+  width: 70%;
+  padding: 3px 0 0 10px;
+  line-height: 40px;
+  font-weight: bold;
+  font-size: 12px;
+  color: #333;
+`;
+const HeaderWapper =  styled_components.default.div`
+  height: 100px;
+  display: flex;
+  margin-left: 5rem;
+`;
+const EclassLogo = styled_components.default.img`
+  position: relative;
+  top: 0;
+  botton: 0;
+  margin: auto 10px auto 20px;
+  height: 42px;
+  width: 240px;
+  background-image: url(${eclass_logo});
+  background-size: cover;
+`;
+var QuickMenuClick = function (url) {
+  window.location.href = url; // QuickMenu 아이콘을 클릭하면 해당 URL로 이동합니다.
+};
 
+var _a = (0, react.useState)([]), schedule = _a[0], setSchedule = _a[1];
+var _b = (0, react.useState)([]), subjects = _b[0], setSubjects = _b[1];
 
+const loginCheck = useRecoilValue(isLoginCheck);
+const allEvent = useRecoilValue(EventState);
 
-var Home = function () {
-    var _a = (0, react_1.useState)([]), schedule = _a[0], setSchedule = _a[1];
-    var _b = (0, react_1.useState)([]), subjects = _b[0], setSubjects = _b[1];
-    var allEvent = (0, recoil.useRecoilValue)(Atom.EventState);
-    var loginCheck = (0, recoil.useRecoilValue)(Atom.isLoginCheck);
-    (0, react_1.useEffect)(function () {
-        if (loginCheck) {
-            (function () { return __awaiter(void 0, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0: return [4 /*yield*/, Api.get('/home').then(function (res) {
-                                var _a = res.data.result, schedule = _a.schedule, subjects = _a.subjects;
-                                setSchedule(__spreadArray([], schedule, true));
-                                setSubjects(__spreadArray([], subjects, true));
-                            })];
-                        case 1:
-                            _a.sent();
-                            return [2 /*return*/];
-                    }
-                });
-            }); })();
-        }
+    useEffect(() =>{
+
+      if(loginCheck){
+        (async () =>{
+          await Api.get('/main').then( (res) => {
+            const {schedule,subjects} = res.data.result;
+            setSchedule([...schedule]);
+            setSubjects([...subjects]);
+          });
+        })(); 
+      }
+      else {
+        setSchedule([]);
+        setSubjects([]);
+      }
+    },[loginCheck,allEvent])
+    
+    
+    
+    const context = useContext(AuthContext);
+    function get_userId () {
+        if(localStorage.getItem("token")) return context.user.userId
         else {
-            setSchedule([]);
-            setSubjects([]);
+            window.location.replace("/login");
         }
-    }, [loginCheck, allEvent]);
-    var QuickMenuClick = function (url) {
-        window.location.href = url; // QuickMenu 아이콘을 클릭하면 해당 URL로 이동합니다.
-    };
+    }
     return (
-    // <>
     <div>
-        {loginCheck ? (<TopMenu>
+        {localStorage.getItem("token") ? (<TopMenu>
           <TopMenuContent>
               커뮤니티
               <div className="datalist">
@@ -157,49 +279,44 @@ var Home = function () {
               <div className="datalist">
                 <div className="datalist-item" onClick={function () { return QuickMenuClick('https://portal.dongguk.edu/member/login/login.do?sso=ok'); }}>동국대 포탈</div>
                 <div className="datalist-item" onClick={function () { return QuickMenuClick('http://www.kmooc.kr/'); }}>KMOOC</div>
-
               </div>
-
             </TopMenuContent>
           </TopMenu>)}
-
-        <BgImage style={{ backgroundImage: "url(".concat(IMG_4174_jpeg_1.default, ")") }}>
+        <BgImage style={{ backgroundImage: "url(".concat(IMG_4174_jpeg, ")") }}>   
         <MyWapper>
-          <MySchedule_1.default schedule={schedule} loginCkeck={loginCheck}></MySchedule_1.default>
-          <MyClass_1.default subjects={subjects} loginCkeck={loginCheck}></MyClass_1.default>
-        </MyWapper>
+          <MySchedule.default schedule={schedule} logincheck={localStorage.getItem("token")} ></MySchedule.default>
+          <MyClass.default subjects={subjects} logincheck={localStorage.getItem("token")}></MyClass.default>
+        </MyWapper> 
         <QuickMenuWapper>
           <QuickMenuTitle>QUICK MENU</QuickMenuTitle>
           <QuickMenuContent onClick={function () { return QuickMenuClick('https://www.dongguk.edu/main'); }}>
-            <QuickMenuImage src={quick_banner01_png_1.default} alt='Quick Menu'/>
+            <QuickMenuImage src={quick_banner01_png} alt='Quick Menu'/>
             <QuickMenuSpan>동국대학교</QuickMenuSpan>
           </QuickMenuContent>
           <QuickMenuContent onClick={function () { return QuickMenuClick('https://mdrims.dongguk.edu/'); }}>
-            <QuickMenuImage src={quick_banner02_png_1.default} alt='Quick Menu'/>
+            <QuickMenuImage src={quick_banner02_png} alt='Quick Menu'/>
             <QuickMenuSpan>mDRIMS</QuickMenuSpan>
           </QuickMenuContent> 
           <QuickMenuContent onClick={function () { return QuickMenuClick('https://ddp.dongguk.edu/login.jsp'); }}>
-            <QuickMenuImage src={quick_banner03_png_1.default} alt='Quick Menu'/>
+            <QuickMenuImage src={quick_banner03_png} alt='Quick Menu'/>
             <QuickMenuSpan>드림패스</QuickMenuSpan>
           </QuickMenuContent>
           <QuickMenuContent onClick={function () { return QuickMenuClick('https://ctl.dongguk.edu/main'); }}>
-            <QuickMenuImage src={quick_banner04_png_1.default} alt='Quick Menu'/>
+            <QuickMenuImage src={quick_banner04_png} alt='Quick Menu'/>
             <QuickMenuSpan>교수학습개발센터</QuickMenuSpan>
           </QuickMenuContent>
           <QuickMenuContent onClick={function () { return QuickMenuClick('https://dongguk.copykiller.com/'); }}>
-            <QuickMenuImage src={quick_banner05_png_1.default} alt='Quick Menu'/>
+            <QuickMenuImage src={quick_banner05_png} alt='Quick Menu'/>
             <QuickMenuSpan>카피킬러</QuickMenuSpan>
           </QuickMenuContent>
           <QuickMenuContent onClick={function () { return QuickMenuClick('https://lib.dongguk.edu/'); }}>
-            <QuickMenuImage src={quick_banner06_png_1.default} alt='Quick Menu'/>
+            <QuickMenuImage src={quick_banner06_png} alt='Quick Menu'/>
             <QuickMenuSpan>중앙도서관</QuickMenuSpan>
           </QuickMenuContent>
         </QuickMenuWapper>
-
-
       </BgImage>
-      </div>);
-};
-}
+      </div>
+      );
+    };
+
 export default Main;
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10;
