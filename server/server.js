@@ -1,21 +1,21 @@
 import { ApolloServer, gql } from "apollo-server";
+import "dotenv/config";
 import mongoose from "mongoose";
-import {
-  querySubjects,
-  querySubject,
-  queryUserSubjects,
-} from "./controller/query/query.subject.js";
-import { mutCreateUser } from "./controller/mutation/mutation.user.js";
+import { createAdmin } from "./admin.js";
 import { mutLogin } from "./controller/mutation/mutation.login.js";
 import {
   mutAddUserToSubject,
   mutCreateSubject,
 } from "./controller/mutation/mutation.subject.js";
+import { mutCreateUser } from "./controller/mutation/mutation.user.js";
+import {
+  querySubject,
+  querySubjects,
+  queryUserSubjects,
+} from "./controller/query/query.subject.js";
 import { queryUser, queryUsers } from "./controller/query/query.user.js";
-import { getUserFromToken } from "./user.permission.js";
-import { createAdmin } from "./admin.js";
 import { initData } from "./info.js";
-import "dotenv/config";
+import { getUserFromToken } from "./user.permission.js";
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -33,6 +33,7 @@ mongoose.connection.once("open", async () => {
     console.error("Error checking admin user:", error);
   }
 
+  await console.log("?")
   const typeDefs = gql`
     scalar DateTime
 
