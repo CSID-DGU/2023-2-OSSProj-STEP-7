@@ -24,4 +24,6 @@ var isLogin = function () {
     var token = (0, exports.getToken)();
     return token ? true : false;
 };
+
+
 exports.isLogin = isLogin;

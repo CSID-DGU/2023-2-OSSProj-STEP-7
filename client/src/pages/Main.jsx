@@ -1,9 +1,14 @@
-import React from 'react';
+import react from 'react';
 import {useContext, useState, useEffect} from "react";
-import  recoil from 'recoil';
-import {Atom} from '../components/Atom';
-import { RecoilRoot } from 'recoil';
+// import {atom} from '../components/Atom';
 import Api from "../components/api";
+// import { utils } from '../components/utils'; // utils
+import { useRecoilValue } from 'recoil';
+import { isLoginCheck, EventState} from '../components/Atom';
+import { recoilPersist } from 'recoil-persist';
+// import { useRecoilValue } from 'recoil';
+// import { RecoilRoot } from 'recoil';
+// import  recoil from 'recoil';
 
 import quick_banner01_png from "../Assets/Images/quick_banner01.png";
 import quick_banner02_png from "../Assets/Images/quick_banner02.png";
@@ -14,36 +19,16 @@ import quick_banner06_png from "../Assets/Images/quick_banner06.png";
 import IMG_4174_jpeg from "../Assets/Images/IMG_4174.jpeg";
 import {AuthContext} from "../context/authContext";
 import {gql, useQuery} from "@apollo/client";
-// import eclass_logo from "../Assets/Images/eclass_logo.png";
 import eclass_logo from '../Assets/Images/eclass_logo.png';
 
 
-// 나머지 코드에서 Recoil을 사용할 수 있습니다.
-// import { React, useEffect, useState } from "react";
-// import Main from "../components/CourseRow.js";
-
-var react = require("react");
 var MyClass = require("../components/MyClass");
 var MySchedule = require("../components/MySchedule");
-// var header = require("../components/header");
 var styled_components = require("styled-components");
 
-// var recoil_1 = require("recoil");
-// var Atom_1 = require("recoil/Atom");
-// var Api = require("lib/Api");
-// var quick_banner01_png = require("../Assets/Images/quick_banner01.png");
-// var quick_banner02_png = require("../Assets/Images/quick_banner02.png");
-// var quick_banner03_png = require("../Assets/Images/quick_banner03.png");
-// var quick_banner04_png = require("../Assets/Images/quick_banner04.png");
-// var quick_banner05_png = require("../Assets/Images/quick_banner05.png");
-// var quick_banner06_png = require("../Assets/Images/quick_banner06.png");
-// var IMG_4174_jpeg = require("../Assets/Images/IMG_4174.jpeg");
-
-// const TitleBox = (props) => {
-//   const basicBoxStyles = {
-//       background: `url(${backImage}) center/cover no-repeat`
-//   };
-
+// var persistAtom = (0, recoil_persist.recoilPersist)().persistAtom;
+// var recoil_persist = require("recoil-persist");
+const { persistAtom } = recoilPersist();
 
 const QUERY_USER = gql`
     query User($userId: ID!) {
@@ -58,8 +43,6 @@ const QUERY_USER = gql`
       }
     }
 `
-
-
 
 const Main= () => {
 // "use strict";
@@ -210,14 +193,11 @@ var QuickMenuSpan = styled_components.default.div`
   font-size: 12px;
   color: #333;
 `;
-
-
 const HeaderWapper =  styled_components.default.div`
   height: 100px;
   display: flex;
   margin-left: 5rem;
 `;
-
 const EclassLogo = styled_components.default.img`
   position: relative;
   top: 0;
@@ -228,87 +208,45 @@ const EclassLogo = styled_components.default.img`
   background-image: url(${eclass_logo});
   background-size: cover;
 `;
+var QuickMenuClick = function (url) {
+  window.location.href = url; // QuickMenu 아이콘을 클릭하면 해당 URL로 이동합니다.
+};
 
+var _a = (0, react.useState)([]), schedule = _a[0], setSchedule = _a[1];
+var _b = (0, react.useState)([]), subjects = _b[0], setSubjects = _b[1];
 
-// const Header = () => {
+const loginCheck = useRecoilValue(isLoginCheck);
+const allEvent = useRecoilValue(EventState);
 
-//   return(
-//     <HeaderWapper>
-//       <EclassLogo to='/'></EclassLogo>
-//     </HeaderWapper>
-//   )
-// }
+    useEffect(() =>{
 
-
-// var home = function () {
-    var _a = (0, react.useState)([]), schedule = _a[0], setSchedule = _a[1];
-    var _b = (0, react.useState)([]), subjects = _b[0], setSubjects = _b[1];
-    // var allEvent = (0, recoil.useRecoilValue)(Atom.EventState);
-    // var loginCheck = (0, recoil.useRecoilValue)(Atom.isLoginCheck);
-    // (0, react.useEffect) 
-
-
-    const [title, setTitle] = useState("");
-    const [index, setIndex ] = useState(0);
-    const [tab, setTab ] = useState(0);
-
+      if(loginCheck){
+        (async () =>{
+          await Api.get('/main').then( (res) => {
+            const {schedule,subjects} = res.data.result;
+            setSchedule([...schedule]);
+            setSubjects([...subjects]);
+          });
+        })(); 
+      }
+      else {
+        setSchedule([]);
+        setSubjects([]);
+      }
+    },[loginCheck,allEvent])
+    
+    
+    
     const context = useContext(AuthContext);
-    const values = { userId : get_userId() };
-    const { data, loading, error } = useQuery(QUERY_USER, {
-        variables: values,
-        onError(graphglError){
-            console.log(graphglError);
-        }
-    });
-
-    const setContents = (n, m) => {
-        setIndex(n);
-        setTab(m);
-    }
-
     function get_userId () {
         if(localStorage.getItem("token")) return context.user.userId
         else {
             window.location.replace("/login");
         }
     }
-
-
-      //   if (loginCheck) {
-      //       (function () { return __awaiter(void 0, void 0, void 0, function () {
-      //           return __generator(this, function (_a) {
-      //               switch (_a.label) {
-      //                   case 0: return [4 /*yield*/, Api.get('/home').then(function (res) {
-      //                           var _a = res.data.result, schedule = _a.schedule, subjects = _a.subjects;
-      //                           setSchedule(__spreadArray([], schedule, true));
-      //                           setSubjects(__spreadArray([], subjects, true));
-      //                       })];
-      //                   case 1:
-      //                       _a.sent();
-      //                       return [2 /*return*/];
-      //   //             }
-      //   //         });
-      //       }); })();
-      //   }
-      //   else {
-      //       setSchedule([]);
-      //       setSubjects([]);
-      //   }
-      // }, [loginCheck, allEvent]); 
-
-
-
-    var QuickMenuClick = function (url) {
-        window.location.href = url; // QuickMenu 아이콘을 클릭하면 해당 URL로 이동합니다.
-    };
     return (
-    // <>
-
     <div>
-        {context.user.userId ? (<TopMenu>
-
-          {/* <LogoImage src={eclass_logo} alt="Logo" /> */}
-
+        {localStorage.getItem("token") ? (<TopMenu>
           <TopMenuContent>
               커뮤니티
               <div className="datalist">
@@ -326,8 +264,6 @@ const EclassLogo = styled_components.default.img`
               </div>
             </TopMenuContent>
           </TopMenu>) : (<TopMenu>
-            {/* <LogoImage src={eclass_logo} alt="Logo" /> */}
-
             <TopMenuContent>
               커뮤니티
               <div className="datalist">
@@ -343,16 +279,13 @@ const EclassLogo = styled_components.default.img`
               <div className="datalist">
                 <div className="datalist-item" onClick={function () { return QuickMenuClick('https://portal.dongguk.edu/member/login/login.do?sso=ok'); }}>동국대 포탈</div>
                 <div className="datalist-item" onClick={function () { return QuickMenuClick('http://www.kmooc.kr/'); }}>KMOOC</div>
-
               </div>
-
             </TopMenuContent>
           </TopMenu>)}
-
         <BgImage style={{ backgroundImage: "url(".concat(IMG_4174_jpeg, ")") }}>   
         <MyWapper>
-          <MySchedule.default schedule={schedule} ></MySchedule.default>
-          <MyClass.default subjects={subjects} ></MyClass.default>
+          <MySchedule.default schedule={schedule} logincheck={localStorage.getItem("token")} ></MySchedule.default>
+          <MyClass.default subjects={subjects} logincheck={localStorage.getItem("token")}></MyClass.default>
         </MyWapper> 
         <QuickMenuWapper>
           <QuickMenuTitle>QUICK MENU</QuickMenuTitle>
@@ -381,13 +314,9 @@ const EclassLogo = styled_components.default.img`
             <QuickMenuSpan>중앙도서관</QuickMenuSpan>
           </QuickMenuContent>
         </QuickMenuWapper>
-
-
       </BgImage>
       </div>
       );
     };
-  
 
 export default Main;
-// var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10;

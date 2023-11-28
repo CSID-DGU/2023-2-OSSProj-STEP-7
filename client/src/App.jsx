@@ -5,12 +5,13 @@ import Class from "./pages/Class";
 import Main from "./pages/Main";
 import Header from './components/Header';
 import { Navigate } from "react-router-dom";
-
+import { RecoilRoot } from 'recoil';
 
 
 
   function App() {
     return (
+      <RecoilRoot>
       <BrowserRouter>
         <Routes>
           <Route
@@ -27,6 +28,7 @@ import { Navigate } from "react-router-dom";
           <Route path="*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
+      </RecoilRoot>
     );
   }
 export default App;

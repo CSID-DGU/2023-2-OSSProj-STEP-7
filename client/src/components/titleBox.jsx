@@ -191,6 +191,10 @@ query Subject($subjectId: ID!) {
                                 <Text>
                                     결석 횟수
                                 </Text>
+                                <Text>
+                                    미처리
+                                </Text>
+                             
                             </HStack>
                             <Divider borderColor="blackAlpha.700"/>
                             <HStack
@@ -203,17 +207,13 @@ query Subject($subjectId: ID!) {
                                 <Text ml={7}>
                                     {/* {data.subject.capacity} 명
                                     {data.subject && data.subject.capacity ? data.subject.capacity + ' 명' : '정원 정보 없음'} */}
-                                    n 번
-                                
-
+                                    l 번
                                 </Text>
-                                <Text> m번
-                                <Button size="xs" align="center" bgColor="blackAlpha.700" color="whiteAlpha.900">
-                                    +
-                                </Button>
-                                <Button size="xs" align="center" bgColor="blackAlpha.700" color="whiteAlpha.900">
-                                    -
-                                </Button>
+                                <Text> 
+                                    m번
+                                </Text>
+                                <Text>
+                                    n번
                                 </Text>
                             </HStack>
                         </Box>

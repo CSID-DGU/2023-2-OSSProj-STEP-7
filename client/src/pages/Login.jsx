@@ -52,7 +52,7 @@ const Login = (props) => {
             context.login(userData);
             addSuccessToast(userData.user.username);
             setInterval( () => {
-                window.location.replace("/class/");
+                window.location.replace("/main/");
             }, 1000);
         },
         onError({graphQLErrors}){
