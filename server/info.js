@@ -2,15 +2,16 @@ import bcrypt from "bcrypt";
 import fs from "fs";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
-import { Subject } from "./models/subject.model.js";
-import { User } from "./models/user.model.js";
 import { Assignment } from "./models/assignment.model.js";
+import { Subject } from "./models/subject.model.js";
+import { TodoList } from "./models/todolist.model.js";
+import { User } from "./models/user.model.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const passwordLogPath = path.join(__dirname, "passwords.log");
 
-console.log(passwordLogPath)
+console.log(passwordLogPath) ;
 const courseTypes = ["학기", "일교", "공교", "전공", "전필", "전선"];
 
 const firstNames = [
@@ -179,6 +180,51 @@ async function assignAssignmentsToSubjects(subjects, assignments) {
   }
 }
 
+async function assignTodoListToSubjects(subjects, todolists) {
+  const saveQueue = [];
+
+  for (let subject of subjects) {
+    const numTodoLists = 1;
+
+    let availableTodoLists = [...todolists];
+
+    for (let i = 0; i < numTodoLists; i++) {
+      
+      let todolist = availableTodoLists[Math.floor(Math.random() * availableTodoLists.length)];
+
+      if (!subject.todolists) {
+        subject.todolists = [];
+      }
+      
+      subject.todolists.push(todolist._id);
+      
+      if (todolist.subjects.length < todolist.capacity) {
+        subject.todolists.push(todolist._id);
+        todolist.subjects.push(subject._id);
+
+        saveQueue.push(todolist.save());
+
+        if (saveQueue.length >= MAX_CONCURRENT_SAVES) {
+          await Promise.allSettled(saveQueue);
+          saveQueue.length = 0;
+        }
+
+        availableTodoLists = availableTodoLists.filter(a => a !== todolist);
+      }
+    }
+
+    saveQueue.push(subject.save());
+    if (saveQueue.length >= MAX_CONCURRENT_SAVES) {
+      await Promise.allSettled(saveQueue);
+      saveQueue.length = 0;
+    }
+  }
+
+  if (saveQueue.length > 0) {
+    await Promise.allSettled(saveQueue);
+  }
+}
+
 export const initData = async () => {
   const startHourOptions = [1.0, 2.0, 3.0, 4.0]; // 가장 빠른 시작 시간
   const endHourOptions = [2.0, 3.0, 4.0, 5.0] ; // 가장 늦은 종료 시간
@@ -195,11 +241,19 @@ export const initData = async () => {
     const classification =
       courseTypes[Math.floor(Math.random() * courseTypes.length)];
     const capacity = Math.floor(Math.random() * (41 - 20)) + 20;
-    const startHour =
-      startHourOptions[Math.floor(Math.random() * startHourOptions.length)];
-    const endHour =
-      endHourOptions[Math.floor(Math.random() * endHourOptions.length)];
-    const lecture_time = `${startHour} - ${endHour}`;
+    const startHourIndex = Math.floor(Math.random() * startHourOptions.length);
+    const endHourIndex = Math.floor(Math.random() * endHourOptions.length);
+    const startHour = startHourOptions[startHourIndex];
+    const endHour = endHourOptions[endHourIndex];
+    let lecture_time;
+    const hourDifference = endHour - startHour;
+    if (hourDifference >= 1.0) {
+      const lecture_time = `${startHour} - ${endHour}`;
+      console.log(lecture_time);
+    } else {
+      console.log("시작 시간과 종료 시간의 차이가 1.0 이상이어야 합니다. 다시 시도하세요.");
+      continue;
+    }
     const lecture_date =
       lectureDateOptions[
         Math.floor(Math.random() * lectureDateOptions.length)
@@ -217,7 +271,7 @@ export const initData = async () => {
         Math.floor(Math.random() * lateCountOptions.length)
       ];
     const nothandle_count =
-      lateCountOptions[
+      nothandleCountOptions[
         Math.floor(Math.random() * nothandleCountOptions.length)
       ];
     let newSubject = new Subject({
@@ -235,7 +289,7 @@ export const initData = async () => {
     await newSubject.save();
     subjects.push(newSubject);
   }
-  console.log(subjects)
+  console.log(subjects) ;
 
   let users = [];
   for (let i = 0; i < 10; i++) {
@@ -259,8 +313,8 @@ export const initData = async () => {
 
     await newUser.save();
     users.push(newUser);
-    console.log(i)
-  
+    console.log(i);
+
   const assignmentStatusOptions = ["미제출", "제출 완료"];
   const assignmentDateOptions = ["2023-12-05", "2023-12-09", "2023-12-12", "2023-12-15", "2023-12-20", "2023-12-18", "2023-12-31"];
   
@@ -285,10 +339,40 @@ export const initData = async () => {
     await newAssignment.save();
     assignments.push(newAssignment);
   }
-  console.log(assignments)
+  console.log(assignments);
+
+  const middleDateOptions = ["2023-10-20", "2023-10-18", "2023-10-25", "2023-10-26", "2023-10-27", "2023-10-28", "2023-10-29"];
+  const finalDateOptions = ["2023-12-11", "2023-12-12", "2023-12-13", "2023-12-14", "2023-12-15", "2023-12-18", "2023-12-16"];
+  
+  let todolists = [];
+  for (let i = 0; i < 10; i++) {
+    
+    const middle_date =
+      middleDateOptions[
+        Math.floor(Math.random() * middleDateOptions.length)
+      ];
+
+    const final_date =
+      finalDateOptions[
+        Math.floor(Math.random() * finalDateOptions.length)
+      ];
+    const capacity = Math.floor(Math.random() * (41 - 20)) + 20;
+
+    let newTodoList = new TodoList({
+      middle_exam : `중간고사`,
+      final_exam : `기말고사`,
+      middle_date,
+      final_date,
+      subjects,
+      capacity,
+    });
+    await newTodoList.save();
+    todolists.push(newTodoList);
+  }
+  console.log(todolists);
 
   await assignSubjectsToUsers(users, subjects);
   await assignAssignmentsToSubjects(subjects, assignments);
-
+  await assignTodoListToSubjects(subjects, todolists);
   }
 };
