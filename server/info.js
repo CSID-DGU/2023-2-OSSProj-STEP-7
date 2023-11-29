@@ -180,13 +180,14 @@ async function assignAssignmentsToSubjects(subjects, assignments) {
 }
 
 export const initData = async () => {
-  const startHourOptions = [1.0, 2.0, 3.0]; // 가장 빠른 시작 시간
-  const endHourOptions = [2.0, 3.0, 4.0]; // 가장 늦은 종료 시간
+  const startHourOptions = [1.0, 2.0, 3.0, 4.0]; // 가장 빠른 시작 시간
+  const endHourOptions = [2.0, 3.0, 4.0, 5.0] ; // 가장 늦은 종료 시간
   const lectureDateOptions = ["월,수", "화,금", "화,수", "수,금", "월,화", "화,목", "월", "화", "수", "목", "금"];
   const lectureRoomOptions = ["경영관 L307", "정보문화관 Q201", "정보문화관 Q202", "정보문화관 P403", "정보문화관 P401", "사회과학관 M202",
 "사회과학관 M304", "사회과학관 M407", "경영관 MBA203", "원흥관 E317", "학술문화관 K309", "학술문화관 K352", "혜화관 514", "혜화관 512"];
   const absentCountOptions = [0, 1, 2];
   const lateCountOptions = [0, 1, 2];
+  const nothandleCountOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
   let subjects = [];
   for (let i = 0; i < 10; i++) {
@@ -215,6 +216,10 @@ export const initData = async () => {
       lateCountOptions[
         Math.floor(Math.random() * lateCountOptions.length)
       ];
+    const nothandle_count =
+      lateCountOptions[
+        Math.floor(Math.random() * nothandleCountOptions.length)
+      ];
     let newSubject = new Subject({
       name: `Subject-${i}`,
       credit,
@@ -225,6 +230,7 @@ export const initData = async () => {
       lecture_room,
       absent_count,
       late_count,
+      nothandle_count,
     });
     await newSubject.save();
     subjects.push(newSubject);

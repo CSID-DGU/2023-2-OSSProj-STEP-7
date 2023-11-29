@@ -29,7 +29,7 @@ mongoose.connection.once("open", async () => {
 
   try {
     await createAdmin();
-    // await initData();
+    await initData();
     console.log("Admin user checked successfully");
   } catch (error) {
     console.error("Error checking admin user:", error);
@@ -96,6 +96,7 @@ mongoose.connection.once("open", async () => {
       lecture_room: String
       absent_count: Int
       late_count: Int
+      nothandle_count: Int
       assignments: [Assignment]
     }
 

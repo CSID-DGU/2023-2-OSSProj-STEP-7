@@ -32,6 +32,7 @@ export const mutCreateSubject = async (
     lecture_room,
     absent_count,
     late_count,
+    nothandle_count,
   });
   return subject.save();
 };

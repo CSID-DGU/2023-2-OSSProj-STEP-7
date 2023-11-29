@@ -21,6 +21,7 @@ const SubjectSchema = new mongoose.Schema({
   lecture_room: String,
   absent_count: Number,
   late_count: Number,
+  nothandle_count: Number,
   assignments: [
     {
       type: mongoose.Schema.Types.ObjectId,
