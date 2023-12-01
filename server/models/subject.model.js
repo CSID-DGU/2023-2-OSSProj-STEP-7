@@ -27,7 +27,13 @@ const SubjectSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Assignment",
     },
-  ]
+  ],
+  todolists: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TodoList",
+    },
+  ],
 });
 
 export const Subject = mongoose.model("Subject", SubjectSchema);

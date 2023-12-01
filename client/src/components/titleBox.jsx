@@ -10,9 +10,16 @@ query Subject($subjectId: ID!) {
     classification
     credit
     capacity
+    absent_count
+    late_count
+    nothandle_count
+    lecture_time
+    lecture_date
+    lecture_room
     users {
       _id
     }
+    
   }
 }
 `
@@ -207,13 +214,13 @@ query Subject($subjectId: ID!) {
                                 <Text ml={7}>
                                     {/* {data.subject.capacity} 명
                                     {data.subject && data.subject.capacity ? data.subject.capacity + ' 명' : '정원 정보 없음'} */}
-                                    l 번
+                                    {data.subject && data.subject.late_count ? data.subject.late_count + ' 번' : '0 번'}
                                 </Text>
                                 <Text> 
-                                    m번
+                                    {data.subject && data.subject.absent_count ? data.subject.absent_count + ' 번' : '0 번'}
                                 </Text>
                                 <Text>
-                                    n번
+                                    {data.subject && data.subject.nothandle_count ? data.subject.nothandle_count + ' 번' : '0 번'}
                                 </Text>
                             </HStack>
                         </Box>
