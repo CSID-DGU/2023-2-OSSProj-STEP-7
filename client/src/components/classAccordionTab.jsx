@@ -276,7 +276,7 @@ const ClassAccordionTab = (props) => {
                             fontSize="15px"
                         >
                             <EditIcon mr={2} />
-                            내할일보기
+                            내 할 일 보기
                         </Box>
                         <AccordionIcon />
                     </AccordionButton>
