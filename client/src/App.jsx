@@ -14,18 +14,10 @@ import { RecoilRoot } from 'recoil';
       <RecoilRoot>
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/main"
-            element={
-              <>
-                <Header />
-                <Main />
-              </>
-            }
-          />
+          <Route path="/main" element={<><Header /> <Main /> </> }/>
           <Route path="/login" element={<Login />} />
           <Route path="/class" element={<Class />} />
-          <Route path="*" element={<Notfound />} />
+          <Route path="*" element={<><Header /> <Main /> </> }/>
         </Routes>
       </BrowserRouter>
       </RecoilRoot>

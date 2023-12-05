@@ -19,11 +19,14 @@ var logout = function () {
         window.location.href = '/';
 };
 exports.logout = logout;
+
+
 // memo지혜 : 로그인유무를 확인하는 함수
 var isLogin = function () {
     var token = (0, exports.getToken)();
     return token ? true : false;
 };
 
-
 exports.isLogin = isLogin;
+
+// export {logout, isLogin}
