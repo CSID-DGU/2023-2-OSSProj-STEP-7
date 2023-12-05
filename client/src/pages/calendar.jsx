@@ -1,5 +1,18 @@
+import {Atom} from '../components/Atom';
+import check_png from '../Assets/Images/check.png';
+import Api from "../components/api";
+import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 
-"use strict";
+
+import SubjectScheduleAdd from "../components/SubjectScheduleAdd";
+import PersonalScheduleAdd from "../components/PersonalScheduleAdd";
+import PersonalScheduleDetail from "../components/PersonalScheduleDetail";
+import SubjectDetail from "../components/SubjectDetail";
+
+
+const Calendar= () => {
+// "use strict";
 var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
     if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
     return cooked;
@@ -69,40 +82,43 @@ var daygrid_1 = require("@fullcalendar/daygrid");
 var timegrid_1 = require("@fullcalendar/timegrid");
 var interaction_1 = require("@fullcalendar/interaction");
 var ko_1 = require("@fullcalendar/core/locales/ko");
-var SubjectScheduleAdd_1 = require("Components/SubjectScheduleAdd");
-var PersonalScheduleAdd_1 = require("Components/PersonalScheduleAdd");
-var PersonalScheduleDetail_1 = require("Components/PersonalScheduleDetail");
-var SubjectDetail_1 = require("Components/SubjectDetail");
+
+
+const persistAtom = recoilPersist().persistAtom;
+
+
+const EventState = atom({
+    key: 'evtState',
+    default: [],
+    effects_UNSTABLE: [persistAtom]
+  });
+
+  
 var recoil_1 = require("recoil");
-var Atom_1 = require("recoil/Atom");
+// var Atom_1 = require("recoil/Atom");
 var uuid_1 = require("uuid");
-var check_png_1 = require("Assets/Images/check.png");
 var ai_1 = require("react-icons/ai");
 var moment_1 = require("moment");
-var Api = require("lib/Api");var Container = styled_components_1.default.div`
+
+var Container = styled_components_1.default.div`
 width: 80%;
 margin: 3rem auto 5rem;
 `;
-
 var Filter = styled_components_1.default.div`
 display: flex;
 flex-direction: column;
 align-content: flex-end;
-
 &:first-child {
   margin-bottom: 2rem;
 }
-
 &:last-child {
   margin-top: 2rem;
 }
 `;
-
 var PostBtn = styled_components_1.default.button`
 &:first-child {
   margin-right: 1rem;
 }
-
 width: 9.5rem;
 height: 2.8rem;
 background-color: ${(props) => (props.btnName === 'personal' ? 'orange' : '#6ED746')};
@@ -114,37 +130,30 @@ font-size: 1rem;
 font-weight: bold;
 cursor: pointer;
 `;
-
 var CalendarDiv = styled_components_1.default.div`
 display: flex;
 flex-direction: row;
 `;
-
 var CalendarBody = styled_components_1.default.div`
 width: 75%;
 `;
-
 var TaskBody = styled_components_1.default.div`
 width: 22%;
 margin-left: 3%;
 `;
-
 var TaskBodyStyle = styled_components_1.default.div`
 text-align: left;
 padding-left: 1rem;
 border-radius: 5px;
 border: 2px solid #c9b087;
 `;
-
 var TodoList = styled_components_1.default(TaskBodyStyle)`
 height: 60%;
 `;
-
 var CompleteList = styled_components_1.default(TaskBodyStyle)`
 margin-top: 1rem;
 height: 37%;
 `;
-
 var TodoTask = styled_components_1.default.div`
 display: flex;
 justify-content: space-between;
@@ -152,7 +161,6 @@ border: 0;
 background-color: transparent;
 margin-top: 0.5rem;
 `;
-
 var Subheading = styled_components_1.default.p`
 display: block;
 margin: 0.7rem 1rem 1.5rem 0;
@@ -165,7 +173,6 @@ font-weight: 600;
 vertical-align: middle;
 padding-top: 0.5rem;
 `;
-
 var Dday = styled_components_1.default.div`
 background-color: #12314f;
 color: #fff;
@@ -177,24 +184,19 @@ padding: 0.2rem 0;
 width: 2.5rem;
 height: 1rem;
 `;
-
 var MainFilter = styled_components_1.default.div`
 display: flex;
 justify-content: flex-end;
 `;
-
 var RightAlign = styled_components_1.default.div`
 display: flex;
 justify-content: flex-end;
 margin-top: 2rem;
 `;
-
 var PostBtns = styled_components_1.default(RightAlign)``;
-
 var SubFilter = styled_components_1.default(RightAlign)`
 margin-bottom: 2rem;
 `;
-
 var RestoreBtn = styled_components_1.default.button`
 background-color: #A69D8F;
 border: none;
@@ -207,19 +209,16 @@ font-size: 0.7rem;
 font-weight: bold;
 text-align: center;
 `;
-
 var TaskTitle = styled_components_1.default.span`
 display: block;
 width: 80%;
 margin-left: 0.5rem;
 text-align: left;
 `;
-
 var CompleteTitle = styled_components_1.default(TaskTitle)`
 text-decoration: line-through;
 color: #737373;
 `;
-
 var TaskIconConatiner = styled_components_1.default.div`
 padding-top: 0.1rem;
 `;
@@ -257,7 +256,7 @@ var Calendar = function () {
     var _h = (0, react_1.useState)(getTodayMonth), month = _h[0], setMonth = _h[1];
     var _j = (0, react_1.useState)(getTodayYear), year = _j[0], setYear = _j[1];
     // memo지혜 : 전체 일정에 대한 상태관리
-    var _k = (0, recoil_1.useRecoilState)(Atom_1.EventState), evtState = _k[0], setEvtState = _k[1];
+    var _k = (0, recoil_1.useRecoilState)(EventState), evtState = _k[0], setEvtState = _k[1];
     var calendarRef = (0, react_1.useRef)(null);
     // memo지혜 : 필터
     var _l = (0, react_1.useState)('ALL'), mainFilter = _l[0], setMainFilter = _l[1];
@@ -309,16 +308,16 @@ var Calendar = function () {
                                     if (s.schedule === 'COMMON') {
                                         var idx = IMPORTANCE.indexOf(s.importance);
                                         s['color'] = "rgba(255,0,0,".concat(ALPHA[idx], ")");
-                                        s.scheduleType === 'TASK' ? (s['imageurl'] = check_png_1.default) : (s['imageurl'] = '');
+                                        s.scheduleType === 'TASK' ? (s['imageurl'] = check_png.default) : (s['imageurl'] = '');
                                     }
                                     else if (s.schedule === 'SUBJECT') {
                                         var idx = IMPORTANCE.indexOf(s.importance);
                                         s['color'] = "rgba(0,255,0,".concat(ALPHA[idx], ")");
-                                        s.scheduleType === 'TASK' ? (s['imageurl'] = check_png_1.default) : (s['imageurl'] = '');
+                                        s.scheduleType === 'TASK' ? (s['imageurl'] = check_png.default) : (s['imageurl'] = '');
                                     }
                                     else {
                                         s['color'] = "rgba(0,0,255,1.0)";
-                                        s.scheduleType === 'ASSIGNMENT' ? (s['imageurl'] = check_png_1.default) : (s['imageurl'] = '');
+                                        s.scheduleType === 'ASSIGNMENT' ? (s['imageurl'] = check_png.default) : (s['imageurl'] = '');
                                     }
                                 });
                                 setEvtState(__spreadArray([], filteringResult.map(function (event) { return (__assign(__assign({}, event), { 'start': event.startDate, 'end': event.endDate })); }), true));
@@ -345,11 +344,11 @@ var Calendar = function () {
                                     if (s.schedule === 'SUBJECT') {
                                         var idx = IMPORTANCE.indexOf(s.importance);
                                         s['color'] = "rgba(0,255,0,".concat(ALPHA[idx], ")");
-                                        s.scheduleType === 'TASK' ? (s['imageurl'] = check_png_1.default) : (s['imageurl'] = '');
+                                        s.scheduleType === 'TASK' ? (s['imageurl'] = check_png.default) : (s['imageurl'] = '');
                                     }
                                     else {
                                         s['color'] = "rgba(0,0,255,1.0)";
-                                        s.scheduleType === 'ASSIGNMENT' ? (s['imageurl'] = check_png_1.default) : (s['imageurl'] = '');
+                                        s.scheduleType === 'ASSIGNMENT' ? (s['imageurl'] = check_png.default) : (s['imageurl'] = '');
                                     }
                                 });
                                 setEvtState(__spreadArray([], filteringResult.map(function (event) { return (__assign(__assign({}, event), { 'start': event.startDate, 'end': event.endDate })); }), true));
@@ -385,21 +384,26 @@ var Calendar = function () {
                     return [4 /*yield*/, Api.get("/schedule/common?month=".concat(visitedMonth))];
                 case 1:
                     response = _b.sent();
-                    _a = response.data.result, commonSchedule = _a.commonSchedule, subjectSchedule = _a.subjectSchedule, officialSchedule = _a.officialSchedule;
+                    // _a = response.data.result, commonSchedule = _a.commonSchedule, subjectSchedule = _a.subjectSchedule, officialSchedule = _a.officialSchedule;
                     // memo지혜 : 중요도에 따른 불투명도 설정 및 TASK일 경우 아이콘 부여
+                    _a = response.data.result;
+                    commonSchedule = _a.commonSchedule;
+                    subjectSchedule = _a.subjectSchedule;
+                    officialSchedule = _a.officialSchedule;
+
                     commonSchedule.forEach(function (s) {
                         var idx = IMPORTANCE.indexOf(s.importance);
                         s['color'] = "rgba(255,0,0,".concat(ALPHA[idx], ")");
-                        s.scheduleType === 'TASK' ? (s['imageurl'] = check_png_1.default) : (s['imageurl'] = '');
+                        s.scheduleType === 'TASK' ? (s['imageurl'] = check_png.default) : (s['imageurl'] = '');
                     });
                     subjectSchedule.forEach(function (s) {
                         var idx = IMPORTANCE.indexOf(s.importance);
                         s['color'] = "rgba(0,255,0,".concat(ALPHA[idx], ")");
-                        s.scheduleType === 'TASK' ? (s['imageurl'] = check_png_1.default) : (s['imageurl'] = '');
+                        s.scheduleType === 'TASK' ? (s['imageurl'] = check_png.default) : (s['imageurl'] = '');
                     });
                     officialSchedule.forEach(function (s) {
                         s['color'] = "rgba(0,0,255,1.0)";
-                        s.scheduleType === 'ASSIGNMENT' ? (s['imageurl'] = check_png_1.default) : (s['imageurl'] = '');
+                        s.scheduleType === 'ASSIGNMENT' ? (s['imageurl'] = check_png.default) : (s['imageurl'] = '');
                     });
                     newEventList = __spreadArray(__spreadArray(__spreadArray([], commonSchedule, true), subjectSchedule, true), officialSchedule, true);
                     setEvtState(__spreadArray([], newEventList.map(function (event) { return (__assign(__assign({}, event), { 'start': event.startDate, 'end': event.endDate })); }), true));
@@ -673,15 +677,15 @@ var Calendar = function () {
 
         {/* memo지혜 : 일정등록모달 */}
         {postModal.personalPost &&
-                    <PersonalScheduleAdd_1.default handleModalToggle={handlePostModalToggle} getApi={performGetRequest} date={[month, year]}/>}
+                    <PersonalScheduleAdd.default handleModalToggle={handlePostModalToggle} getApi={performGetRequest} date={[month, year]}/>}
         {postModal.subjectPost &&
-                    <SubjectScheduleAdd_1.default handleModalToggle={handlePostModalToggle} getApi={performGetRequest} date={[month, year]} subjectList={subjectList}/>}
+                    <SubjectScheduleAdd.default handleModalToggle={handlePostModalToggle} getApi={performGetRequest} date={[month, year]} subjectList={subjectList}/>}
 
         {/* memo지혜 : 일정상세보기모달 */}
         {readModal.personalRead &&
-                    <PersonalScheduleDetail_1.default handleModalToggle={function () { return setReadModal(__assign(__assign({}, readModal), { personalRead: !readModal.personalRead })); }} getApi={performGetRequest} id={id} date={[month, year]} event={evt}/>}
+                    <PersonalScheduleDetail.default handleModalToggle={function () { return setReadModal(__assign(__assign({}, readModal), { personalRead: !readModal.personalRead })); }} getApi={performGetRequest} id={id} date={[month, year]} event={evt}/>}
         {readModal.subjectRead &&
-                    <SubjectDetail_1.default handleModalToggle={function () { return setReadModal(__assign(__assign({}, readModal), { subjectRead: !readModal.subjectRead })); }} getApi={performGetRequest} id={id} date={[month, year]} event={evt} subjectList={subjectList}/>}
+                    <SubjectDetail.default handleModalToggle={function () { return setReadModal(__assign(__assign({}, readModal), { subjectRead: !readModal.subjectRead })); }} getApi={performGetRequest} id={id} date={[month, year]} event={evt} subjectList={subjectList}/>}
 
         {/* memo지혜 : 일정등록버튼 */}
         <PostBtns>
@@ -692,5 +696,7 @@ var Calendar = function () {
             : <h1>Loading</h1>}
       </>);
 };
-exports.default = Calendar;
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10, templateObject_11, templateObject_12, templateObject_13, templateObject_14, templateObject_15, templateObject_16, templateObject_17, templateObject_18, templateObject_19, templateObject_20;
+}
+export default Calendar;
+
+// var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10, templateObject_11, templateObject_12, templateObject_13, templateObject_14, templateObject_15, templateObject_16, templateObject_17, templateObject_18, templateObject_19, templateObject_20;
