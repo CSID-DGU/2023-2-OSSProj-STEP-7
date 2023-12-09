@@ -42,10 +42,10 @@ const ClassAccordionTab = (props) => {
     function get_id(title) {
         if (title) return title;
         else {
-            if (props.data.user && props.data.user.isAdmin) {
+            if (props.data && props.data.user && props.data.user.isAdmin) {
                 props.setTitle("6471ea1d8c0d64b3c26745d4");
                 return "6471ea1d8c0d64b3c26745d4";
-            } else if (props.data.user && props.data.user.subjects.length > 0) {
+            } else if (props.data && props.data.user && props.data.user.subjects.length > 0) {
                 props.setTitle(props.data.user.subjects[0]._id);
                 return props.data.user.subjects[0]._id;
             } else {
@@ -327,7 +327,7 @@ const ClassAccordionTab = (props) => {
                             <EditIcon mr={2} />
                             {/* data.subject가 존재하고, nothandle_count가 존재하면 해당 값을 보여줌 */}
                             내할일보기{' '}
-      {data.subject && data.subject.nothandle_count
+      {data && data.subject && data.subject.nothandle_count
         ? `${data.subject.nothandle_count} 번`
         : '0 번'}
                         </Box>
