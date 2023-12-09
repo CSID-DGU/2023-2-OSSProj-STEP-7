@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+// import dayGridPlugin from "@fullcalendar/timeGrid";
+// import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from '@fullcalendar/interaction';
 
-class MyCalendar extends Component {
+class Dal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: this.loadEventsFromLocalStorage(),
+      events: 
+        this.loadEventsFromLocalStorage(),
+  
     };
 
     // 메서드를 클래스에 바인딩
@@ -38,6 +42,16 @@ class MyCalendar extends Component {
       this.saveEventsToLocalStorage(updatedEvents);
     }
   }
+  handleEventClick = (clickInfo) => {
+    if (window.confirm(`'${clickInfo.event.title}' 이벤트를 삭제하시겠습니까?`)) {
+      const updatedEvents = this.state.events.filter(event => event.title !== clickInfo.event.title);
+      this.setState({ events: updatedEvents });
+      this.saveEventsToLocalStorage(updatedEvents);
+
+    }
+  };
+  
+  
 
   render() {
     return (
@@ -47,10 +61,28 @@ class MyCalendar extends Component {
             <div className="calendar-wrapper">
               <FullCalendar
                 plugins={[dayGridPlugin, interactionPlugin]}
+
                 initialView="dayGridMonth"
+                
                 events={this.state.events}
+                
                 selectable={true}
+                
                 select={this.handleDateSelect}
+                
+                headerToolbar={{
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                  }}
+
+
+                  navLinks={ true} // can click day/week names to navigate views
+                  selectables={ true} 
+                  selectMirrors={ true} 
+                  editables={true} 
+                  dayMaxEventss={ true} 
+                  eventClick={this.handleEventClick}
               />
             </div>
           </div>
@@ -60,4 +92,4 @@ class MyCalendar extends Component {
   }
 }
 
-export default MyCalendar;
+export default Dal;
