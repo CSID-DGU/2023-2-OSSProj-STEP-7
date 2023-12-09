@@ -9,11 +9,60 @@ import {
     Link
 } from "@chakra-ui/react";
 import {EditIcon} from "@chakra-ui/icons";
+import {gql, useQuery} from "@apollo/client";
+
+
+
+
+const QUERY_SUBJECT = gql`
+query Subject($subjectId: ID!) {
+  subject(subjectId: $subjectId) {
+    name
+    classification
+    credit
+    capacity
+    absent_count
+    late_count
+    nothandle_count
+    lecture_time
+    lecture_date
+    lecture_room
+    users {
+      _id
+    }
+    
+  }
+}
+`
 
 const ClassAccordionTab = (props) => {
     const setContents = (n, m) => {
         props.setContets(n, m)
     }
+    function get_id(title) {
+        if (title) return title;
+        else {
+            if (props.data.user && props.data.user.isAdmin) {
+                props.setTitle("6471ea1d8c0d64b3c26745d4");
+                return "6471ea1d8c0d64b3c26745d4";
+            } else if (props.data.user && props.data.user.subjects.length > 0) {
+                props.setTitle(props.data.user.subjects[0]._id);
+                return props.data.user.subjects[0]._id;
+            } else {
+                // Handle the case where props.data.user or props.data.user.subjects is null or empty.
+                // You might want to provide a default value or handle it differently based on your requirements.
+                return "defaultSubjectId";
+            }
+        }
+    }
+    const _id = get_id(props.title);
+    const values = { subjectId : _id};
+    const { data, loading, error } = useQuery(QUERY_SUBJECT, {
+        variables: values,
+        onError(graphglError){
+            console.log(graphglError);
+        }
+    });
 
     return (
         <Accordion minW="200px"
@@ -276,7 +325,11 @@ const ClassAccordionTab = (props) => {
                             fontSize="15px"
                         >
                             <EditIcon mr={2} />
-                            내할일보기
+                            {/* data.subject가 존재하고, nothandle_count가 존재하면 해당 값을 보여줌 */}
+                            내할일보기{' '}
+      {data.subject && data.subject.nothandle_count
+        ? `${data.subject.nothandle_count} 번`
+        : '0 번'}
                         </Box>
                         <AccordionIcon />
                     </AccordionButton>

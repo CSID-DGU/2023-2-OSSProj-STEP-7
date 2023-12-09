@@ -26,7 +26,7 @@ const ClassLearningContent = (props) => {
     var navigate = (0, react_router_dom.useNavigate)();
 
 var moveToCalendar = function (e) {
-    navigate("/MyCalendar/");
+    navigate("/Dal/");
     // navigate("/class/" + subjectId, { state: { subjectId: subjectId, subjectName: subjectName } });
 
 };
