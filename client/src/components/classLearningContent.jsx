@@ -113,7 +113,7 @@ var moveToCalendar = function (e) {
                                         <Tr >
                                             <Td fontWeight="700" textAlign="center" bgColor="#AAAFBE" >출 석 <EditIcon mr={2} /></Td>
                                             <Td p={0} >
-                                                <Box w="260px" h="120px" p={3} bgColor="#DFF2C2">
+                                                <Box w="100%" h="120px" p={3} bgColor="#DFF2C2">
                                                     <Text textColor="#2A410E" fontWeight="600" fontSize="12px">
                                                         X주차 1강
                                                     </Text>
@@ -122,7 +122,7 @@ var moveToCalendar = function (e) {
                                                     </Text>
                                                     <Progress mt={4} value={100} size='md' />
                                                 </Box>
-                                                <Box w="260px" h="120px" p={3} bgColor="#DFF2C2">
+                                                <Box w="100%" h="120px" p={3} bgColor="#DFF2C2">
                                                     <Text textColor="#2A410E" fontWeight="600" fontSize="12px">
                                                         X주차 2강
                                                     </Text>
@@ -133,7 +133,7 @@ var moveToCalendar = function (e) {
                                                 </Box>
                                             </Td>
                                             <Td p={0} >
-                                                <Box w="260px" h="120px" p={3} bgColor="#DFF2C2">
+                                                <Box w="100%" h="120px" p={3} bgColor="#DFF2C2">
                                                     <Text textColor="#2A410E" fontWeight="600" fontSize="12px">
                                                         X주차 1강
                                                     </Text>
@@ -142,7 +142,7 @@ var moveToCalendar = function (e) {
                                                     </Text>
                                                     <Progress mt={4} value={100} size='md' />
                                                 </Box>
-                                                <Box w="260px" h="120px" p={3} bgColor="#DFF2C2">
+                                                <Box w="100%" h="120px" p={3} bgColor="#DFF2C2">
                                                     <Text textColor="#2A410E" fontWeight="600" fontSize="12px">
                                                         X주차 2강
                                                     </Text>
@@ -153,7 +153,8 @@ var moveToCalendar = function (e) {
                                                 </Box>
                                             </Td>
                                             <Td p={0} >
-                                                <Box w="260px" h="120px" p={3} bgColor="#DFF2C2">
+                                                <Box w="100%" h="120px" p={3} bgColor="#DFF2C2">
+                                                {/* <Box w="100%" h="120px" p={3} bgColor="#DFF2C2" border="2px solid #4CAF50"> */}
                                                     <Text textColor="#2A410E" fontWeight="600" fontSize="12px">
                                                         X주차 1강
                                                     </Text>
@@ -162,7 +163,8 @@ var moveToCalendar = function (e) {
                                                     </Text>
                                                     <Progress mt={4} size='md' value={100} />
                                                 </Box>
-                                                <Box w="260px" h="120px" p={3} bgColor="#DFF2C2">
+                                                <Box w="100%" h="120px" p={3} bgColor="#DFF2C2">
+                                                {/* <Box w="100%" h="120px" p={3} bgColor="#DFF2C2" border="2px solid #4CAF50"> */}
                                                     <Text textColor="#2A410E" fontWeight="600" fontSize="12px">
                                                         X주차 2강
                                                     </Text>
