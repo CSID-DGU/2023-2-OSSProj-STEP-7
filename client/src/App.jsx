@@ -18,7 +18,7 @@ import { RecoilRoot } from 'recoil';
         <Routes>
           <Route path="/main" element={<><Header /> <Main /> </> }/>
           <Route path="/login" element={<Login />} />
-          <Route path="/mycalendar" element={<MyCalendar />} />
+          <Route path="/MyCalendar" element={<MyCalendar />} />
           <Route path="/class" element={<Class />} />
           <Route path="/dal" element={<Dal />} />
           <Route path="*" element={<><Header /> <Main /> </> }/>

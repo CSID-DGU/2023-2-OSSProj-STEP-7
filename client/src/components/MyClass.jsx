@@ -1,5 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { isLoginCheck, EventState,userInfoState } from '../components/Atom';
+import {useContext, useEffect, useRef, useState} from "react";
+import {AuthContext} from "../context/authContext";
+import {gql, useQuery} from "@apollo/client";
 
 // "use strict";
 var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
@@ -64,8 +69,37 @@ var ClassButton = styled_components_1.default.button`
   cursor: pointer;
 `;
 // memo정민: 홈 '내 강의실' Component
+
+const QUERY_USER = gql`
+    query User($userId: ID!) {
+       user(userId: $userId) {
+        email
+        isAdmin
+        _id
+        subjects {
+          _id
+        }
+        username
+      }
+    }
+`
+
+
 var MyClass = function (_a) {
-    var subjects = _a.subjects, loginCkeck = _a.loginCkeck;
+  const context = useContext(AuthContext);
+  const userId = context.user ? context.user.userId : null;
+
+  const { data, loading, error } = useQuery(QUERY_USER, {
+    variables: { userId: userId },
+    onError(graphglError){
+        console.log(graphglError);
+    }
+});
+
+
+const [loginCheck, setLoginCheck] = useRecoilState(isLoginCheck);
+
+    var subjects = _a.subjects; // loginCkeck = _a.loginCkeck;
     var navigate = (0, react_router_dom_1.useNavigate)();
     var moveToElass = function (e) {
         var subjectId = e.target.value;
@@ -86,7 +120,7 @@ var MyClass = function (_a) {
   ;
 return (
   <>
-  { (myClass.length < 1 && !loginCkeck)?
+  { (myClass.length < 1 && !loginCheck)?
   <Container>
     
     <MyClassDiv style={{ backgroundImage: `url(${logo_png})`}}>

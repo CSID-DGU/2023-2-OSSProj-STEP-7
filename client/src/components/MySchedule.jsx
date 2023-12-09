@@ -1,4 +1,11 @@
-"use strict";
+// import {Subjects, Schedules, schedules, subjects} from "./homeSchedule";
+import { useRecoilState } from 'recoil';
+import { isLoginCheck, EventState,userInfoState } from '../components/Atom';
+import {useContext, useEffect, useRef, useState} from "react";
+import {AuthContext} from "../context/authContext";
+import {gql, useQuery} from "@apollo/client";
+
+// "use strict";
 var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
     if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
     return cooked;
@@ -83,12 +90,39 @@ var ScheduleBox = styled_components_1.default.div`
     border-radius: 6px;
   }
 `;
-
+const QUERY_USER = gql`
+    query User($userId: ID!) {
+       user(userId: $userId) {
+        email
+        isAdmin
+        _id
+        subjects {
+          _id
+        }
+        username
+      }
+    }
+`
 
 
 // memo정민: 홈 '내 할 일 보기'
 var MySchedule = function (_a) {
-    var schedule = _a.schedule, loginCheck = _a.loginCheck;
+  
+  const context = useContext(AuthContext);
+  const userId = context.user ? context.user.userId : null;
+
+  const { data, loading, error } = useQuery(QUERY_USER, {
+    variables: { userId: userId },
+    onError(graphglError){
+        console.log(graphglError);
+    }
+});
+
+
+const [loginCheck, setLoginCheck] = useRecoilState(isLoginCheck);
+
+
+    var schedule = _a.schedule ; //, loginCheck = _a.loginCheck;
     // memo정민: 등록된 일정 리스트
     var mySchedule = schedule
         .map(function (schedules, index) {
@@ -110,7 +144,7 @@ var MySchedule = function (_a) {
                 <Container>
       <MyScheduleDiv>
         <Title>내 할 일 보기</Title>
-        <CalendarButton to='/calendar'>+</CalendarButton>
+        <CalendarButton to='/dal'>+</CalendarButton>
         <ScheduleBox>
           {mySchedule.length > 0 ? mySchedule : <p>할 일이 없습니다.</p>}
         </ScheduleBox>
