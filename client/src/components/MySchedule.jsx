@@ -25,6 +25,7 @@ var MyScheduleDiv = styled_components_1.default.div`
   background-size: 100px;
 `;
 
+
 var Title = styled_components_1.default.h2`
   text-align: left;
   font-size: 16px;
