@@ -4,6 +4,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 // import dayGridPlugin from "@fullcalendar/timeGrid";
 // import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from '@fullcalendar/timegrid';
+
+
+
 
 class Dal extends Component {
   constructor(props) {
@@ -66,7 +70,7 @@ class Dal extends Component {
           <div className="body-info-container">
             <div className="calendar-wrapper">
               <FullCalendar
-                plugins={[dayGridPlugin, interactionPlugin]}
+                plugins={[dayGridPlugin, interactionPlugin,timeGridPlugin]}
 
                 initialView="dayGridMonth"
                 
