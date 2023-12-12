@@ -6,7 +6,7 @@ var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cook
 Object.defineProperty(exports, "__esModule", { value: true });
 var styled_components_1 = require("styled-components");
 var react_router_dom_1 = require("react-router-dom");
-var logo_png_1 = require("../Assets/Images/logo.png");
+var logo_png = require("../Assets/Images/logo.png");
 var uuid_1 = require("uuid");
 
 var Container = styled_components_1.default.div`width: 50%;`;
@@ -88,7 +88,7 @@ var ScheduleBox = styled_components_1.default.div`
 
 // memo정민: 홈 '내 할 일 보기'
 var MySchedule = function (_a) {
-    var schedule = _a.schedule, loginCkeck = _a.loginCkeck;
+    var schedule = _a.schedule, loginCheck = _a.loginCheck;
     // memo정민: 등록된 일정 리스트
     var mySchedule = schedule
         .map(function (schedules, index) {
@@ -98,11 +98,11 @@ var MySchedule = function (_a) {
     </ListWapper>;
     });
     return (<>
-    {(!loginCkeck) ?
+    {(!loginCheck) ?
             <Container>
-      <MyScheduleDiv style={{ backgroundImage: "url(".concat(logo_png_1.default, ")") }}>
+      <MyScheduleDiv style={{ backgroundImage: `url(${logo_png})`}}>
+      {/* <MyClassDiv style={{ backgroundImage: `url(${logo_png})`}}> */}
         <Title>내 시간표</Title>
-        <LoginText>로그인 후 사용가능합니다.</LoginText>
       </MyScheduleDiv>
     </Container>
             :

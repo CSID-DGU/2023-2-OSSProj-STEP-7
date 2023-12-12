@@ -6,14 +6,55 @@ import {
     AccordionPanel,
     Box,
     Divider,
-    Link
+    Link,
+    Text
 } from "@chakra-ui/react";
 import {EditIcon} from "@chakra-ui/icons";
+import {gql, useQuery} from "@apollo/client";
+
+const QUERY_ASSIGNMENT = gql`
+query Subject($subjectId: ID!) {
+  subject(subjectId: $subjectId) {
+    users {
+      _id
+    }
+    assignments {
+        _id
+        assignment_name
+        assignment_status
+        assignment_date
+    }
+  }
+}
+`
 
 const ClassAccordionTab = (props) => {
     const setContents = (n, m) => {
         props.setContets(n, m)
     }
+
+    function get_id(title) {
+        if (title) return title;
+        else {
+            if (props.data && props.data.subject.assignments.length > 0) {
+                props.setTitle(props.data.subject.assignments[0]._id);
+                return props.data.subject.assignments[0]._id;
+            } else {
+                // Handle the case where props.data.user or props.data.user.subjects is null or empty.
+                // You might want to provide a default value or handle it differently based on your requirements.
+                return null;
+            }
+        }
+    }
+
+    const _id = String(get_id(props.title));
+    const values = { assignmentId : _id };
+    const { data, loading, error } = useQuery(QUERY_ASSIGNMENT, {
+        variables: values,
+        onError(graphglError){
+            console.log(graphglError);
+        }
+    });
 
     return (
         <Accordion minW="200px"
@@ -283,7 +324,21 @@ const ClassAccordionTab = (props) => {
                 </h2>
                 <Divider />
                 <AccordionPanel py={2} fontSize="14px" fontWeight="600" height="200px" color="black" backgroundColor={"aliceblue"} >
-                    <Link display="block"> list </Link>
+                    <Link display="block">
+                            {loading ? (
+                                <p>Loading...</p>
+                            ) : error ? (
+                                <Box  border="1px" borderColor="gray.300" p={2} my={2} borderRadius="md">
+                                    <Text>D - 7 </Text>
+                                    <Text fontWeight="600" fontSize="16px">과제: Assignment-0</Text>
+                                </Box>
+                            ) : <>
+                                <p>Assignment Name: {data.subject && data.subject.assignments.assignment_name}</p>
+                                <p>Assignment Status: {data.subject && data.subject.assignments.assignment_status}</p>
+                                <p>Assignment Date: {data.subject && data.subject.assignments.assignment_date}</p>
+                                </>
+                            }
+                    </Link>
                 </AccordionPanel>
                 <Divider />
                 <Divider />

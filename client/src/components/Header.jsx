@@ -1,7 +1,35 @@
 // import SignIn from './SignIn';
+import {
+  Text,
+} from "@chakra-ui/react";
 import styled from 'styled-components';
 import eclass_logo from '../Assets/Images/eclass_logo.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { isLoginCheck, EventState,userInfoState } from '../components/Atom';
+import {useContext, useEffect, useRef, useState} from "react";
+import {AuthContext} from "../context/authContext";
+import {gql, useQuery} from "@apollo/client";
+import {logout} from '../components/utils';
+import {UserInfo} from '../components/GlobalState';
+import {IAuthForm} from '../components/IAuthForm';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+
+
+const QUERY_USER = gql`
+    query User($userId: ID!) {
+       user(userId: $userId) {
+        email
+        isAdmin
+        _id
+        subjects {
+          _id
+        }
+        username
+      }
+    }
+`
 
 const HeaderWapper = styled.div`
   height: 100px;
@@ -20,7 +48,7 @@ const EclassLogo = styled(Link)`
 `;
 
 const SignInButton = styled(Link)`
-  margin 33px 0;
+  margin: 33px 0;
   text-align: center;
   color: #fff;
   padding: 7px 16px;
@@ -32,8 +60,8 @@ const SignInButton = styled(Link)`
 `;
 
 
-const SignUpButton = styled(Link)`
-  margin 33px 0;
+const SignOutButton = styled.button`
+  margin: 33px 0;
   text-align: center;
   color: #fff;
   padding: 7px 16px;
@@ -44,16 +72,56 @@ const SignUpButton = styled(Link)`
   cursor: pointer;
 `;
 
+
 const Header = () => {
 
-  return(
-    <HeaderWapper>
-      <EclassLogo to='/'></EclassLogo>
+  const context = useContext(AuthContext);
+  const userId = context.user ? context.user.userId : null;
 
-      <SignInButton to='/login'>로그인</SignInButton>
-      {/* <SignUpButton>회원가입</SignUpButton> */}
-    </HeaderWapper>
-  )
-}
+  const { data, loading, error } = useQuery(QUERY_USER, {
+    variables: { userId: userId },
+    onError(graphglError){
+        console.log(graphglError);
+    }
+});
+
+
+const [loginCheck, setLoginCheck] = useRecoilState(isLoginCheck);
+
+const LogoutHandler = () =>{
+  logout(); 
+  setLoginCheck(false); }
+  // context.user=null;
+
+  const renderUserStatus = () => {
+
+    if (data && data.user) {
+      return (
+        <HeaderWapper>
+          <EclassLogo> </EclassLogo>
+          <Text color="black" fontWeight="bold" fontSize={14} align="center">
+            {data.user.username}
+            <SignOutButton onClick={LogoutHandler}>로그아웃</SignOutButton>
+          </Text>
+        </HeaderWapper>
+      );    
+    } else {
+      // 유저 정보가 없는 경우 (즉, 로그아웃 된 상태)
+      return (
+        <HeaderWapper>
+          <EclassLogo> </EclassLogo>
+          <SignInButton to='/login'>로그인</SignInButton>
+        </HeaderWapper>
+      );
+    }
+  };
+
+  return (
+    <div>
+      {/* 기타 헤더 내용 */}
+      {renderUserStatus()}
+    </div>
+  );
+};
 
 export default Header;

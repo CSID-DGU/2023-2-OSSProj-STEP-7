@@ -1,5 +1,5 @@
 import react from 'react';
-import {useContext, useState, useEffect} from "react";
+import {useContext, useEffect} from "react";
 // import {atom} from '../components/Atom';
 import Api from "../components/api";
 // import { utils } from '../components/utils'; // utils
@@ -18,7 +18,7 @@ import quick_banner05_png from "../Assets/Images/quick_banner05.png";
 import quick_banner06_png from "../Assets/Images/quick_banner06.png";
 import IMG_4174_jpeg from "../Assets/Images/IMG_4174.jpeg";
 import {AuthContext} from "../context/authContext";
-import {gql, useQuery} from "@apollo/client";
+import {gql} from "@apollo/client";
 import eclass_logo from '../Assets/Images/eclass_logo.png';
 
 
@@ -28,7 +28,7 @@ var styled_components = require("styled-components");
 
 // var persistAtom = (0, recoil_persist.recoilPersist)().persistAtom;
 // var recoil_persist = require("recoil-persist");
-const { persistAtom } = recoilPersist();
+// const { persistAtom } = recoilPersist();
 
 const QUERY_USER = gql`
     query User($userId: ID!) {
@@ -171,7 +171,7 @@ var QuickMenuTitle = styled_components.default.span`
 `;
 var QuickMenuContent = styled_components.default.div`
   display: flex;
-  widht: 100%;
+  width: 100%;
   margin: 10px;
   background-color: #f3d86b;
 
@@ -218,6 +218,7 @@ var _b = (0, react.useState)([]), subjects = _b[0], setSubjects = _b[1];
 const loginCheck = useRecoilValue(isLoginCheck);
 const allEvent = useRecoilValue(EventState);
 
+
     useEffect(() =>{
 
       if(loginCheck){
@@ -260,7 +261,7 @@ const allEvent = useRecoilValue(EventState);
             <TopMenuContent>편의기능
                 <div className="datalist">
                 <div className="datalist-item" onClick={function () { return QuickMenuClick('https://portal.dongguk.edu/member/login/login.do?sso=ok'); }}>동국대 포탈</div>
-                <div className="datalist-item">KMOOC</div>
+                <div className="datalist-item" onClick={function () { return QuickMenuClick('https://new.kmooc.kr/'); }}>KMOOC</div>
               </div>
             </TopMenuContent>
           </TopMenu>) : (<TopMenu>

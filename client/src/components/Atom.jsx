@@ -3,7 +3,7 @@
 
 
 
-// const Atom= (props) => {
+// export const Atom= (props) => {
 
 // "use strict";
 // Object.defineProperty(exports, "__esModule", { value: true });
@@ -82,3 +82,4 @@ export const EventState = atom({
   default: [],
   effects_UNSTABLE: [persistAtom]
 });
+

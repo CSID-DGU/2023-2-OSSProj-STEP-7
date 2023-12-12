@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // "use strict";
 var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
@@ -7,7 +8,7 @@ var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cook
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var styled_components_1 = require("styled-components");
-var logo_png_1 = require("../Assets/Images/logo.png");
+var logo_png = require("../Assets/Images/logo.png");
 var react_router_dom_1 = require("react-router-dom");
 var uuid_1 = require("uuid");
 var Container = styled_components_1.default.div`width: 50%;`;
@@ -73,24 +74,38 @@ var MyClass = function (_a) {
     };
     // memo정민: 강의명과 '강의실 가기' 버튼
     var myClass = subjects
-        .map(function (classes, index) {
-        var subjectName = classes.subjectName, subjectId = classes.subjectId;
-        return (React.createElement(ListWapper, { key: (0, uuid_1.v4)() },
-            React.createElement(MyList, null, subjectName),
-            React.createElement(ClassButton, { onClick: moveToElass, value: subjectId, "data-subject-name": subjectName }, "\uAC15\uC758\uC2E4 \uAC00\uAE30")));
-    });
-    return (React.createElement(React.Fragment, null, (myClass.length < 1 && !loginCkeck) ?
-        React.createElement(Container, null,
-            React.createElement(MyClassDiv, { style: { backgroundImage: "url(".concat(logo_png_1.default, ")") } },
-                React.createElement(Title, null, "\uB0B4 \uAC15\uC758\uC2E4"),
-                React.createElement(LoginText, null, "\uB85C\uADF8\uC778 \uD6C4 \uC0AC\uC6A9\uAC00\uB2A5\uD569\uB2C8\uB2E4.")))
-        :
-            React.createElement(Container, null,
-                React.createElement(MyClassDiv, null,
-                    React.createElement(Title, null, "\uB0B4 \uAC15\uC758\uC2E4"),
-                    myClass))));
+
+    
+  .map((classes, index) => {
+    const {subjectName,subjectId}= classes;
+    // return (<ListWapper key={uuidv4()}>
+    return (<ListWapper key={(0, uuid_1.v4)()}>
+      <MyList>{subjectName}</MyList>
+      <ClassButton onClick={moveToElass} value={subjectId} data-subject-name={subjectName}>강의실 가기</ClassButton>
+    </ListWapper>)})
+  ;
+return (
+  <>
+  { (myClass.length < 1 && !loginCkeck)?
+  <Container>
+    
+    <MyClassDiv style={{ backgroundImage: `url(${logo_png})`}}>
+    <Link to="/class">
+      <Title >내 강의실</Title>
+      </Link>
+    </MyClassDiv>
+ 
+  </Container>
+  :
+  <Container>
+    <MyClassDiv>
+      <Title>내 강의실</Title>
+      {myClass}
+    </MyClassDiv>
+  </Container>
+  }
+  </>
+)
 };
 
-// export default MyClass; 
-export default MyClass; 
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7;
+export default MyClass;

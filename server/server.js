@@ -2,13 +2,13 @@ import { ApolloServer, gql } from "apollo-server";
 import "dotenv/config";
 import mongoose from "mongoose";
 import { createAdmin } from "./admin.js";
-import { mutCreateAssignment } from "./controller/mutation/mutation.assignment.js";
+import { mutAddAssignmentToSubject, mutCreateAssignment } from "./controller/mutation/mutation.assignment.js";
 import { mutLogin } from "./controller/mutation/mutation.login.js";
 import {
   mutAddUserToSubject,
   mutCreateSubject,
 } from "./controller/mutation/mutation.subject.js";
-import { mutCreateTodoList } from "./controller/mutation/mutation.todolist.js";
+import { mutAddTodoListToSubject, mutCreateTodoList } from "./controller/mutation/mutation.todolist.js";
 import { mutCreateUser } from "./controller/mutation/mutation.user.js";
 import { queryAssignment, queryAssignments } from "./controller/query/query.assignment.js";
 import {
@@ -149,6 +149,8 @@ mongoose.connection.once("open", async () => {
       addUserToSubject: mutAddUserToSubject,
       createAssignment: mutCreateAssignment,
       createTodoList : mutCreateTodoList,
+      addAssignmentToSubject: mutAddAssignmentToSubject,
+      addTodoListToSubject: mutAddTodoListToSubject,
     },
   };
 

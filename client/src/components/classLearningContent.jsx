@@ -9,12 +9,27 @@ import {
     TabList,
     TabPanel,
     TabPanels,
-    Tabs, Tbody, Td, Text, Th, Thead, Tr
+    Tabs, Tbody, Td, Text, Th, Thead, Tr,
+    Spacer,IconButton, Image
+    
 } from "@chakra-ui/react";
 import {EditIcon} from "@chakra-ui/icons";
 import calendar from "./calendar"
+import icon from '../Assets/Images/calendar2.jpeg';
+// import Link from 'next/link';
+var react_router_dom = require("react-router-dom");
+
+
 
 const ClassLearningContent = (props) => {
+
+    var navigate = (0, react_router_dom.useNavigate)();
+
+var moveToCalendar = function (e) {
+    navigate("/MyCalendar/");
+    // navigate("/class/" + subjectId, { state: { subjectId: subjectId, subjectName: subjectName } });
+
+};
 
     const handleTabClick = (n) => {
         props.setTab(n);
@@ -24,33 +39,35 @@ const ClassLearningContent = (props) => {
             flex={1}
             h="850px"
         >
+            <HStack>
             <Box
+         
                 h={100}
                 p={10}
 
             >
                 <HStack justify="space-between">
-                    <Heading as="h2" fontSize={30}>학습 목차</Heading>
-                
-                    <Box
-                            bg="gray"
-                            w="350px"
-                            h="100px"
-                            borderRadius={5}
-                        >
-                    <Text>
-                        이 자리에 달력 위젯
+                    <Heading as="h2" fontSize={30}>학습 목차  </Heading>
 
-
-                    </Text>
-                    {/* <calendar>
-
-                    </calendar> */}
-                    </Box>
-
-                    {/* <Button>이 자리에 달력 위젯</Button> */}
                 </HStack>
             </Box>
+            <Spacer />
+            <Box
+               
+                h={100}
+                p={10} >
+
+      
+              < IconButton
+              aria-label="calendar"
+              icon={<Image src={icon}  boxSize="150%" borderRadius="5px"></Image> }
+              onClick={moveToCalendar}
+            
+              />
+                {/* <ClassButton onClick={moveToCalendar} value={subjectId} data-subject-name={subjectName}>강의실 가기</ClassButton> */}
+        
+             </Box>
+             </HStack>
             <Box
                 h={550}
                 p={5}
