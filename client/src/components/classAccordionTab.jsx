@@ -333,9 +333,9 @@ const ClassAccordionTab = (props) => {
                                     <Text fontWeight="600" fontSize="16px">과제: Assignment-0</Text>
                                 </Box>
                             ) : <>
-                                <p>Assignment Name: {data.subject && data.subject.assignments.assignment_name}</p>
-                                <p>Assignment Status: {data.subject && data.subject.assignments.assignment_status}</p>
-                                <p>Assignment Date: {data.subject && data.subject.assignments.assignment_date}</p>
+                                <p>{data.subject && data.subject.assignments.assignment_name}</p>
+                                <p>{data.subject && data.subject.assignments.assignment_status}</p>
+                                <p>{data.subject && data.subject.assignments.assignment_date}</p>
                                 </>
                             }
                     </Link>
